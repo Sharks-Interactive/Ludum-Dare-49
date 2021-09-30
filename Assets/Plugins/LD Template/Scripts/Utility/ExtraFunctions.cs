@@ -3,12 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace SharkUtils
 {
     public static class ExtraFunctions
     {
+        [Serializable]
+        public static class StringKeyedGameObject
+        {
+            public static string Key;
+            public static GameObject Value;
+        }
+
+
         /// <summary>
         /// Checks wether two Quaternions (A and B) are within the acceptable range, used for comparison.
         /// </summary>
@@ -72,6 +79,46 @@ namespace SharkUtils
         public static float RandomFromRange(Vector2 Range)
         {
             return UnityEngine.Random.Range(Range.x, Range.y);
+        }
+
+        /// <summary>
+        /// THIS IS BAD DONT USE THIS PLEASE! But it uh... Get's interfaces
+        /// </summary>
+        /// <typeparam name="T"> Interface type </typeparam>
+        /// <param name="resultList"> List of interfaces </param>
+        /// <param name="objectToSearch"> The object to check if it has an interface </param>
+        public static void GetInterfaces<T>(out List<T> resultList, GameObject objectToSearch) where T : class
+        {
+            MonoBehaviour[] list = objectToSearch.GetComponents<MonoBehaviour>();
+            resultList = new List<T>();
+            foreach (MonoBehaviour mb in list)
+            {
+                if (mb is T)
+                {
+                    //found one
+                    resultList.Add((T)((System.Object)mb));
+                }
+            }
+        }
+
+        /// <summary>
+        /// THIS IS HORRENDOUS DONT USE THIS PLEASE! But it uh... Get's interfaces
+        /// </summary>
+        /// <typeparam name="T"> Interface type </typeparam>
+        /// <param name="resultList"> List of interfaces </param>
+        /// <param name="objectToSearch"> The object to check if it has an interface </param>
+        public static void GetAllInterfaces<T>(out List<T> resultList) where T : class
+        {
+            MonoBehaviour[] list = GameObject.FindObjectsOfType<MonoBehaviour>(true);
+            resultList = new List<T>();
+            foreach (MonoBehaviour mb in list)
+            {
+                if (mb is T)
+                {
+                    //found one
+                    resultList.Add((T)((System.Object)mb));
+                }
+            }
         }
 
         /// <summary>
@@ -169,6 +216,22 @@ namespace SharkUtils
                 Debug.LogWarning("TryRemove at: " + index + ". On List " + l.ToString() + ". Failed.");
             }
         }
+        /// <summary>
+        /// Remove element from array by shifting all elements down and resizing
+        /// </summary>
+        /// <typeparam name="T"> Array type </typeparam>
+        /// <param name="arr"> The array to resize </param>
+        /// <param name="index"> The index of the item to remove </param>
+        public static void RemoveAt<T>(ref T[] arr, int index)
+        {
+            for (int a = index; a < arr.Length - 1; a++)
+            {
+                // moving elements downwards, to fill the gap at [index]
+                arr[a] = arr[a + 1];
+            }
+            // finally, let's decrement Array's size by one
+            Array.Resize(ref arr, arr.Length - 1);
+        }
 
         /// <summary>
         /// Returns a random position along the edge of a circle.
@@ -189,7 +252,7 @@ namespace SharkUtils
         /// <param name="B"> The second Vector of the line. </param>
         /// <param name="Percentage"> Where along the line should we return between 0 and 1. </param>
         /// <returns></returns>
-        public static Vector3 PointAlongLine (Vector3 A, Vector3 B, float Percentage)
+        public static Vector3 PointAlongLine(Vector3 A, Vector3 B, float Percentage)
         {
             return (A + Percentage * (B - A));
         }
@@ -199,7 +262,7 @@ namespace SharkUtils
         /// </summary>
         /// <param name="Percentage"> The percentage of time the return value will be true. </param>
         /// <returns></returns>
-        public static bool Chance (float Percentage)
+        public static bool Chance(float Percentage)
         {
             return UnityEngine.Random.Range(0, 100) <= Percentage;
         }
@@ -237,57 +300,6 @@ namespace SharkUtils
         public static float Remap(this float Value, float From1, float To1, float From2, float To2)
         {
             return (Value - From1) / (To1 - From1) * (To2 - From2) + From2;
-        }
-
-        /// <summary>
-        /// (Extension Method) Takes in a quaternion and strips it of everything axis except the Zed
-        /// </summary>
-        /// <param name="val"></param>
-        /// <returns></returns>
-        public static Quaternion RemoveRotationAxis2D(this Quaternion Val)
-        {
-            Quaternion _val = Val;
-
-            _val.eulerAngles = new Vector3(0, 0, _val.eulerAngles.z);
-
-            return _val;
-        }
-
-        /// <summary>
-        /// Sets the specified axis of a quaternion to the value given
-        /// </summary>
-        /// <param name="_val"> (Extension Method) </param>
-        /// <param name="Axis"> What axis to set: x : y : z : w. </param>
-        /// <param name="Value"> The value to set the axis to. </param>
-        /// <returns></returns>
-        public static Quaternion SetAxis(this Quaternion _val, string Axis, float Value)
-        {
-            Quaternion _rot = _val;
-
-            switch (Axis)
-            {
-                case "x":
-                    _rot.x = Value;
-                    break;
-
-                case "y":
-                    _rot.y = Value;
-                    break;
-
-                case "z":
-                    _rot.z = Value;
-                    break;
-
-                case "w":
-                    _rot.w = Value;
-                    break;
-
-                default:
-                    break;
-            }
-
-            _val = _rot;
-            return _rot;
         }
     }
 

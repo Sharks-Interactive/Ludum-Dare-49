@@ -36,22 +36,11 @@ public class PlayerController : MonoBehaviour
         _tCy = _changeY * 150; 
         _tCy *= Time.deltaTime;
 
-        ASrc.volume = (_changeX != 0 || _changeY != 0) ? 1.0f : 0.0f;
-        WalkAnimator.SetBool("Walking", _changeX != 0 || _changeY != 0);
-
-        _facingRight = (_tCx != 0) ? _tCx > 0 : PlayerAnimator.GetBool("FacingRight");
-
-        PlayerAnimator.SetBool("FacingRight", _facingRight);
         Move();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("ViewZone"))
-            return;
-
-        GetComponent<AudioSource>().PlayOneShot(EndSound);
-        LevelManager.Instance.ResetLevel();
     }
 
     #region Movement

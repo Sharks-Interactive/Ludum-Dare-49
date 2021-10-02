@@ -4,13 +4,15 @@ using UnityEngine;
 using Chrio.Entities;
 using Chrio.Controls;
 using static SharkUtils.ExtraFunctions;
+using DG.Tweening;
 
 public class Spaceship : BaseEntity
 {
     public SpaceshipData Data;
-    protected Vector2 MoveTarget = Vector2.zero;
+    protected Vector3 MoveTarget = Vector3.zero;
     public float Speed = 10.0f;
     public float Accel;
+    public Vector3 Velocity;
 
     public override void OnDamaged(DamageInfo HitInfo)
     {
@@ -21,15 +23,10 @@ public class Spaceship : BaseEntity
 
     void Update()
     {
-        if (MoveTarget != Vector2.zero)
-            rectTransform.position += new Vector3(
-                (MoveTarget.x - rectTransform.position.x) / (Speed * Time.deltaTime),
-                (MoveTarget.y - rectTransform.position.y) / (Speed * Time.deltaTime),
-                0
-                );
+        // y=ax^{2}+bx+c
+        if (MoveTarget != Vector3.zero)
+            rectTransform.position = Vector3.SmoothDamp(rectTransform.position, MoveTarget, ref Velocity, Data.Acceleration, Data.MaxSpeed, Time.deltaTime);
 
-        Debug.Log((MoveTarget.x - transform.position.x) / Speed);
-        Debug.Log((MoveTarget.y - transform.position.y) / Speed);
     }
 
     public override void OnSelected()
@@ -45,6 +42,7 @@ public class Spaceship : BaseEntity
         {
             case CommandType.Move:
                 MoveTarget = MoveTarget.Parse(CmdInfo.Data);
+                MoveTarget.z = 0;
                 break;
         }
     }

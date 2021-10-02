@@ -26,6 +26,10 @@ namespace Chrio.World.Loading
         [Tooltip("Text to display current progress")]
         public TextMeshProUGUI ProgressText;
 
+        [Tooltip("Text to show on the loading scren")]
+        [TextArea(3, 10)]
+        public string LoadingText = "Loading Game... {}%";
+
         [Tooltip("Whether or not this level loader is a debug one")]
         public bool Debug;
 
@@ -33,6 +37,11 @@ namespace Chrio.World.Loading
         private int _totalScripts;
         private int _loadedScripts;
         #endregion
+
+        void Awake()
+        {
+            GameState = new Game_State.State();
+        }
 
         void Start()
         {
@@ -48,7 +57,7 @@ namespace Chrio.World.Loading
         IEnumerator LoadAsync(int _sceneIndex)
         {
             //Allows us to persist to the next scene
-            //DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this);
 
             //Starts loading the scene and stores it in a variable
             AsyncOperation t_operation = SceneManager.LoadSceneAsync(_sceneIndex);
@@ -61,7 +70,7 @@ namespace Chrio.World.Loading
             {
                 //Update the value of the progress slider and text percent display (We subtract 30 for later uses)
                 ProgressSlider.value = (t_operation.progress * 100f) - 30;
-                ProgressText.text = "Loading Game... " + ((t_operation.progress * 100f) - 30) + "%";
+                ProgressText.text = LoadingText.Replace("{}", ((t_operation.progress * 100f) - 30).ToString());
 
                 //Delay the loop
                 yield return null;
@@ -74,7 +83,7 @@ namespace Chrio.World.Loading
                 //Update the value of the progress slider and text percent display (We add 70 for previous uses)
                 // Also we divide 30  by the completion to turn the 0 - 100 to 0 - 30%
                 ProgressSlider.value = 70 + (30 / (_loadedScripts / _totalScripts));
-                ProgressText.text = "Loading Game... " + (70 + (30 / (_loadedScripts / _totalScripts))) + "%";
+                ProgressText.text = LoadingText.Replace("{}", (70 + (30 / (_loadedScripts / _totalScripts))).ToString());
             }
 
             // Hide the loading screen when loading is done
@@ -87,7 +96,7 @@ namespace Chrio.World.Loading
         public void StartScriptLoading()
         {
             // HACK: THIS IS BEYOND ATROCIOUS
-            MonoBehaviour[] _allObjects = FindObjectsOfType<MonoBehaviour>(true);
+            MonoBehaviour[] _allObjects = Object.FindObjectsOfType<MonoBehaviour>(true);
 
             List<ILoadableObject> _interfaceList;
             ExtraFunctions.GetAllInterfaces<ILoadableObject>(out _interfaceList);

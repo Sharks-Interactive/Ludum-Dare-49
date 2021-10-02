@@ -21,7 +21,7 @@ public class Spaceship : BaseEntity
     void Update()
     {
         if (MoveTarget != Vector2.zero)
-            rectTransform.position.Set(
+            rectTransform.position += new Vector3(
                 (MoveTarget.x - rectTransform.position.x) / Speed,
                 (MoveTarget.y - rectTransform.position.y) / Speed,
                 0

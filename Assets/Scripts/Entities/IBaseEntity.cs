@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Chrio.Entities
 {
     public interface IBaseEntity
@@ -10,10 +12,12 @@ namespace Chrio.Entities
 
         public void WhileSelected();
 
-        public void OnDeseleceted();
+        public void OnDeselected();
 
         public void OnCommand(Controls.Command CmdInfo);
 
         public BaseEntity GetEntity();
+
+        public GameObject GetGameObject();
     }
 }

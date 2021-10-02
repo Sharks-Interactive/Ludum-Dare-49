@@ -23,15 +23,27 @@ public class Spaceship : BaseEntity
 
     void Update()
     {
-        // y=ax^{2}+bx+c
         if (MoveTarget != Vector3.zero)
+        {
             rectTransform.position = Vector3.SmoothDamp(rectTransform.position, MoveTarget, ref Velocity, Data.Acceleration, Data.MaxSpeed, Time.deltaTime);
-
+            transform.up += ((MoveTarget - transform.position) / Data.MaxSpeed) * Time.deltaTime * 50;
+        }
     }
 
     public override void OnSelected()
     {
-        Debug.Log("Selected!");
+        transform.DOScale(1.1f, 0.2f); // Change color on selection!!!
+    }
+
+    public override void WhileSelected()
+    {
+        base.WhileSelected();
+    }
+
+    public override void OnDeselected()
+    {
+        base.OnDeselected();
+        transform.DOScale(1, 0.2f);
     }
 
     public override void OnCommand(Command CmdInfo)
@@ -41,7 +53,7 @@ public class Spaceship : BaseEntity
         switch(CmdInfo.Type)
         {
             case CommandType.Move:
-                MoveTarget = MoveTarget.Parse(CmdInfo.Data);
+                MoveTarget = RandomPointInsideCircle(MoveTarget.Parse(CmdInfo.Data), 2);
                 MoveTarget.z = 0;
                 break;
         }

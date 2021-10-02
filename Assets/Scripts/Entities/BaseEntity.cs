@@ -24,9 +24,10 @@ namespace Chrio.Entities
 
         public virtual void WhileSelected() { }
 
-        public virtual void OnDeseleceted() { }
+        public virtual void OnDeselected() { }
 
         public virtual void OnCommand(Command CmdInfo) { }
         public virtual BaseEntity GetEntity() => this;
+        public virtual GameObject GetGameObject() => gameObject;
     }
 }

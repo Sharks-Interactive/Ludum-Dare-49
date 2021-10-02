@@ -35,7 +35,7 @@ namespace Chrio.World
             {
                 Entities = new Entities();
                 Running = true;
-                MainCamera = Camera.main;
+                MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             }
         }
 
@@ -44,9 +44,11 @@ namespace Chrio.World
         {
             private Dictionary<int, IBaseEntity> EntityIDs;
             public Dictionary<GameObject, IBaseEntity> WorldEntities;
+            public List<IBaseEntity> Selected;
 
             public Entities()
             {
+                Selected = new List<IBaseEntity>();
                 WorldEntities = new Dictionary<GameObject, IBaseEntity>();
                 EntityIDs = new Dictionary<int, IBaseEntity>();
 
@@ -63,7 +65,6 @@ namespace Chrio.World
             public IBaseEntity GetEntityByID (int ID) => EntityIDs.ContainsKey(ID) ? EntityIDs[ID] : null;
         }
 
-        
         public class State
         {
             public Mouse Cursor = new Mouse();

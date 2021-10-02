@@ -42,6 +42,14 @@ namespace SharkUtils
             );
         }
 
+        /// <summary>
+        /// Get's the midpoint between two vector2's
+        /// </summary>
+        /// <param name="vector"> The starting vector2 (extension method) </param>
+        /// <param name="secondVector"> The second vector2 </param>
+        /// <returns> Midpoint of the two vectors </returns>
+        public static Vector2 MidPoint(this Vector2 vector, Vector2 secondVector) => new Vector2(((secondVector.x + vector.x) / 2.0f), ((secondVector.y + vector.y) / 2.0f));
+
         public static Vector3 Parse(this Vector3 vector, string sVector)
         {
             if (sVector.StartsWith("(") && sVector.EndsWith(")"))
@@ -55,6 +63,22 @@ namespace SharkUtils
                 float.Parse(sArray[2]));
 
             return result;
+        }
+
+        public static Vector3 ScreenToCanvasPosition(this Canvas canvas, Vector3 screenPosition)
+        {
+            var viewportPosition = new Vector3(screenPosition.x / Screen.width,
+                                               screenPosition.y / Screen.height,
+                                               0);
+            return canvas.ViewportToCanvasPosition(viewportPosition);
+        }
+
+        public static Vector3 ViewportToCanvasPosition(this Canvas canvas, Vector3 viewportPosition)
+        {
+            var centerBasedViewPortPosition = viewportPosition - new Vector3(0.5f, 0.5f, 0);
+            var canvasRect = canvas.GetComponent<RectTransform>();
+            var scale = canvasRect.sizeDelta;
+            return Vector3.Scale(centerBasedViewPortPosition, scale);
         }
 
         public static Vector2 Parse(this Vector2 vector, string sVector)

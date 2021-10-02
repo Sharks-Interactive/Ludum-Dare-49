@@ -53,7 +53,6 @@ namespace Chrio.Interaction
                 prevSelected = null;
             }
 
-
             if (Input.GetMouseButton(0) && prevSelected != null)
                 prevSelected.OnCommand(new Command( // Issue move order
                     CommandType.Move,

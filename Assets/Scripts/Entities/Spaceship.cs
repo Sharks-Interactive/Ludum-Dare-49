@@ -8,6 +8,7 @@ using static SharkUtils.ExtraFunctions;
 public class Spaceship : BaseEntity
 {
     protected Vector3 MoveTarget = new Vector3(0, 0, 0);
+    public float Speed = 1.0f;
 
     public override void OnDamaged(DamageInfo HitInfo)
     {
@@ -18,7 +19,9 @@ public class Spaceship : BaseEntity
 
     void Update()
     {
-        transform.position = MoveTarget;
+        transform.position = Vector2.MoveTowards(transform.position, MoveTarget, Speed);
+        
+        //Vector2
     }
 
     public override void OnSelected()

@@ -7,6 +7,7 @@ using static SharkUtils.ExtraFunctions;
 
 public class Spaceship : BaseEntity
 {
+    public SpaceshipData Data;
     protected Vector2 MoveTarget = Vector2.zero;
     public float Speed = 10.0f;
     public float Accel;
@@ -22,8 +23,8 @@ public class Spaceship : BaseEntity
     {
         if (MoveTarget != Vector2.zero)
             rectTransform.position += new Vector3(
-                (MoveTarget.x - rectTransform.position.x) / Speed,
-                (MoveTarget.y - rectTransform.position.y) / Speed,
+                (MoveTarget.x - rectTransform.position.x) / (Speed * Time.deltaTime),
+                (MoveTarget.y - rectTransform.position.y) / (Speed * Time.deltaTime),
                 0
                 );
 

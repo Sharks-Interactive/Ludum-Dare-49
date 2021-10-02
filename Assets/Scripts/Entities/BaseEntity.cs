@@ -11,6 +11,13 @@ namespace Chrio.Entities
 
         protected float health = 0;
 
+        protected RectTransform rectTransform;
+
+        void Start ()
+        {
+            rectTransform = GetComponent<RectTransform>();
+        }
+
         public virtual void OnDamaged(DamageInfo HitInfo) => health += HitInfo.Amount;
 
         public virtual void OnSelected() { }

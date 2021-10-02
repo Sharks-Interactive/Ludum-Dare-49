@@ -28,6 +28,12 @@ namespace Chrio.Interaction
 
         void Update()
         {
+            if (Input.GetMouseButtonDown(0) && prevSelected != null)
+                prevSelected.OnCommand(new Command( // Issue move order
+                    CommandType.Move,
+                    GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition).ToString("F6")
+                    ));
+
             if (_es.currentSelectedGameObject != null)
             {
                 Assert.IsTrue(GlobalState.Game.Entities.WorldEntities.TryGetValue(_es.currentSelectedGameObject, out curSelected));
@@ -47,17 +53,6 @@ namespace Chrio.Interaction
                     prevSelected = curSelected;
                 }
             }
-            else if (curSelected != null && prevSelected != null)
-            {
-                curSelected = null;
-                prevSelected = null;
-            }
-
-            if (Input.GetMouseButton(0) && prevSelected != null)
-                prevSelected.OnCommand(new Command( // Issue move order
-                    CommandType.Move,
-                    GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition).ToString("F6")
-                    ));
         }
     }
 }

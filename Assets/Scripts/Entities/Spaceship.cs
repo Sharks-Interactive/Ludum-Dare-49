@@ -7,8 +7,9 @@ using static SharkUtils.ExtraFunctions;
 
 public class Spaceship : BaseEntity
 {
-    protected Vector3 MoveTarget = new Vector3(0, 0, 0);
-    public float Speed = 1.0f;
+    protected Vector2 MoveTarget = Vector2.zero;
+    public float Speed = 10.0f;
+    public float Accel;
 
     public override void OnDamaged(DamageInfo HitInfo)
     {
@@ -19,9 +20,15 @@ public class Spaceship : BaseEntity
 
     void Update()
     {
-        transform.position = Vector2.MoveTowards(transform.position, MoveTarget, Speed);
-        
-        //Vector2
+        if (MoveTarget != Vector2.zero)
+            rectTransform.position.Set(
+                (MoveTarget.x - rectTransform.position.x) / Speed,
+                (MoveTarget.y - rectTransform.position.y) / Speed,
+                0
+                );
+
+        Debug.Log((MoveTarget.x - transform.position.x) / Speed);
+        Debug.Log((MoveTarget.y - transform.position.y) / Speed);
     }
 
     public override void OnSelected()
@@ -37,7 +44,6 @@ public class Spaceship : BaseEntity
         {
             case CommandType.Move:
                 MoveTarget = MoveTarget.Parse(CmdInfo.Data);
-                MoveTarget.z = 0; // Reset Z
                 break;
         }
     }

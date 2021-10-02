@@ -57,6 +57,20 @@ namespace SharkUtils
             return result;
         }
 
+        public static Vector2 Parse(this Vector2 vector, string sVector)
+        {
+            if (sVector.StartsWith("(") && sVector.EndsWith(")"))
+                sVector = sVector.Substring(1, sVector.Length - 2);
+
+            string[] sArray = sVector.Split(',');
+
+            Vector2 result = new Vector2(
+                float.Parse(sArray[0]),
+                float.Parse(sArray[1]));
+
+            return result;
+        }
+
         /// <summary>
         /// Returns a vector3 along a circle given the center, diamter and angle.
         /// </summary>

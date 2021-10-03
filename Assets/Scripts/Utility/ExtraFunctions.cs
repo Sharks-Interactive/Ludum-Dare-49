@@ -323,6 +323,29 @@ namespace SharkUtils
         //Defining a public random for the whole library to use
         private static System.Random rng = new System.Random();
 
+        public static float Greatest(this float[] _arr)
+        {
+            float greatest = 0;
+            for (int i = 0; i < _arr.Length; i++)
+                if (_arr[i] > greatest) greatest = _arr[i];
+
+            return greatest;
+        }
+
+        public static int IndexOfGreatest(this float[] _arr)
+        {
+            float greatest = 0;
+            int index = 0;
+            for (int i = 0; i < _arr.Length; i++)
+                if (_arr[i] > greatest)
+                {
+                    greatest = _arr[i];
+                    index = i;
+                }
+
+            return index;
+        }
+
         /// <summary>
         /// Shuffles all of the elements in a list.
         /// </summary>

@@ -19,5 +19,11 @@ namespace Chrio.Entities
         public BaseEntity GetEntity();
 
         public GameObject GetGameObject();
+
+        public int GetOwnerID();
+
+        public string GetEntityType();
+
+        public bool CompareEntityType(string EntType);
     }
 }

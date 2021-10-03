@@ -9,6 +9,10 @@ namespace Chrio.Entities
     {
         public float Health { get => health; set => health = value; }
 
+        public int OwnerID;
+
+        protected string EntityType = "BaseEntity";
+
         protected float health = 0;
 
         protected RectTransform rectTransform;
@@ -29,5 +33,8 @@ namespace Chrio.Entities
         public virtual void OnCommand(Command CmdInfo) { }
         public virtual BaseEntity GetEntity() => this;
         public virtual GameObject GetGameObject() => gameObject;
+        public virtual int GetOwnerID() => OwnerID;
+        public virtual string GetEntityType() => EntityType;
+        public virtual bool CompareEntityType(string EntType) => EntityType == EntType;
     }
 }

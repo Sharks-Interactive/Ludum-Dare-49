@@ -5,6 +5,9 @@ using Chrio.Entities;
 using Chrio.Controls;
 using static SharkUtils.ExtraFunctions;
 using DG.Tweening;
+using UnityEngine.UI;
+using Chrio.World;
+using Chrio.World.Loading;
 
 public class Spaceship : BaseEntity
 {
@@ -13,6 +16,14 @@ public class Spaceship : BaseEntity
     public float Speed = 10.0f;
     public float Accel;
     public Vector3 Velocity;
+    public Image Renderer;
+
+    public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
+    {
+        Renderer = GetComponent<Image>();
+        EntityType = "Spaceship";
+        base.OnLoad(_gameState, _callback);
+    }
 
     public override void OnDamaged(DamageInfo HitInfo)
     {
@@ -32,7 +43,7 @@ public class Spaceship : BaseEntity
 
     public override void OnSelected()
     {
-        transform.DOScale(1.1f, 0.2f); // Change color on selection!!!
+        Renderer.DOColor(Color.blue, 0.2f); // Change color on selection!!!
     }
 
     public override void WhileSelected()
@@ -43,7 +54,7 @@ public class Spaceship : BaseEntity
     public override void OnDeselected()
     {
         base.OnDeselected();
-        transform.DOScale(1, 0.2f);
+        Renderer.DOColor(Color.white, 0.2f); // Change color on selection!!!
     }
 
     public override void OnCommand(Command CmdInfo)

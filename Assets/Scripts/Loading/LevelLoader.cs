@@ -40,12 +40,14 @@ namespace Chrio.World.Loading
 
         void Awake()
         {
-            GameState = new Game_State.State();
+            
         }
 
         void Start()
         {
-            if (Debug) StartScriptLoading();
+            if (!Debug) return;
+            GameState = new Game_State.State();
+            StartScriptLoading();
         }
 
         /// <summary>
@@ -75,6 +77,8 @@ namespace Chrio.World.Loading
                 //Delay the loop
                 yield return null;
             }
+
+            GameState = new Game_State.State();
 
             StartScriptLoading();
 

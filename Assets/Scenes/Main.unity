@@ -1268,7 +1268,7 @@ MonoBehaviour:
 
     Did you know? No coffee was consumed in
     the making of this game.'
-  Debug: 1
+  Debug: 0
 --- !u!1 &601973283
 GameObject:
   m_ObjectHideFlags: 0

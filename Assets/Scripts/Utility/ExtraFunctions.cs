@@ -206,6 +206,18 @@ namespace SharkUtils
         }
 
         /// <summary>
+        /// Picks a random item from an array.
+        /// </summary>
+        /// <typeparam name="T"> The object that will be returned. </typeparam>
+        /// <param name="L"> The list to pick from. </param>
+        /// <returns></returns>
+        public static T Random<T>(this T[] _arr)
+        {
+            var value = _arr[UnityEngine.Random.Range(0, _arr.Length)];
+            return (T)Convert.ChangeType(value, typeof(T));
+        }
+
+        /// <summary>
         /// Picks a random number in the range excluding the set numbers.
         /// </summary>
         /// <param name="min"> The lower number of the range. </param>
@@ -299,6 +311,8 @@ namespace SharkUtils
             return new Vector3(vector2.x + center.x, vector2.y + center.y, vector2.y + center.z);
         }
 
+        public static bool IsInsideCircle(Vector2 Point, Vector2 Center, float Radius) => Vector2.Distance(Center, Point) < Radius;
+
         /// <summary>
         /// Returns a point along a line defined by the vectors A and B where Percentage determines how far from A it is on a scale of 0 - 1
         /// </summary>
@@ -358,16 +372,73 @@ namespace SharkUtils
         {
             X,
             Y,
-            Z
+            Z,
+            W
         }
         /// <summary>
+        /// Updates a single axis of a Transform
+        /// </summary>
+        /// <param name="_vector"> (Extension Method) </param>
+        /// <param name="Value"> The value to set the axis to. </param>
+        /// <param name="Constraint"> The axis to set. </param>
+        /// <returns> The update vector3. </returns>
+        public static Vector3 UpdateAxis(this Transform _vector, float Value, Axis Constraint)
+        {
+            switch (Constraint)
+            {
+                case Axis.X:
+                    _vector.position.Set(Value, _vector.position.y, _vector.position.z);
+                    break;
+
+                case Axis.Y:
+                    _vector.position.Set(_vector.position.x, Value, _vector.position.z);
+                    break;
+
+                case Axis.Z:
+                    _vector.position.Set(_vector.position.x, _vector.position.y, Value);
+                    break;
+            }
+            return _vector.position;
+        }
+
+        /// <summary>
+        /// Updates a single axis of a Quaternion
+        /// </summary>
+        /// <param name="_vector"> (Extension Method) </param>
+        /// <param name="Value"> The value to set the axis to. </param>
+        /// <param name="Constraint"> The axis to set. </param>
+        /// <returns> The update vector3. </returns>
+        public static Quaternion UpdateAxis(this Quaternion _quaternion, float Value, Axis Constraint)
+        {
+            switch (Constraint)
+            {
+                case Axis.X:
+                    _quaternion.Set(Value, _quaternion.y, _quaternion.z, _quaternion.w);
+                    break;
+
+                case Axis.Y:
+                    _quaternion.Set(_quaternion.x, Value, _quaternion.z, _quaternion.w);
+                    break;
+
+                case Axis.Z:
+                    _quaternion.Set(_quaternion.x, _quaternion.y, Value, _quaternion.w);
+                    break;
+
+                case Axis.W:
+                    _quaternion.Set(_quaternion.x, _quaternion.y, _quaternion.z, Value);
+                    break;
+            }
+            return _quaternion;
+        }
+
+        //// <summary>
         /// Updates a single axis of a Vector3
         /// </summary>
         /// <param name="_vector"> (Extension Method) </param>
         /// <param name="Value"> The value to set the axis to. </param>
         /// <param name="Constraint"> The axis to set. </param>
         /// <returns> The update vector3. </returns>
-        public static Vector3 UpdateAxis(this Vector3 _vector, float Value, Axis Constraint)
+        public static Vector3 UpdateAxisEuler(this Vector3 _vector, float Value, Axis Constraint)
         {
             switch (Constraint)
             {
@@ -385,6 +456,7 @@ namespace SharkUtils
             }
             return _vector;
         }
+
 
         public static Color2 GetColor2(this Color[] colors) => new Color2(colors[0], colors[1]);
 

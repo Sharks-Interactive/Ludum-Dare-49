@@ -36,19 +36,38 @@ namespace Chrio.UI
                     float TotalDmg = 0;
                     foreach (IBaseEntity ent in GlobalState.Game.Entities.Selected)
                     {
+                        Drydock dock = GlobalState.Game.Entities.Selected[0].GetEntity() as Drydock;
                         TotalHealth += ent.Health;
-                        TotalMaxHealth += ent.GetData().Health;
+                        if (dock != null)
+                            TotalMaxHealth += ent.GetData().Health * 5;
+                        else
+                            TotalMaxHealth += ent.GetData().Health;
 
                         Spaceship ship = ent.GetEntity() as Spaceship;
+                        
                         if (ship != null)
                             TotalDmg += ship.Turret.Info.Damage;
                     }
 
-                    TextBoxes[2].text =
-                        $"Total Health: {TotalHealth}/{TotalMaxHealth}\nAttacking: Multiple\nTotal Weapon Damage: {TotalDmg} per pulse\n";
-
                     HealthBar.maxValue = TotalMaxHealth;
                     HealthBar.value = TotalHealth;
+
+                    if (AllEntsOfType("Asteroid"))
+                    {
+                        int TotalWorth = 0;
+                        foreach (IBaseEntity ent in GlobalState.Game.Entities.Selected)
+                        {
+                            Asteroid roid = ent.GetEntity() as Asteroid;
+                            if (roid != null)
+                                TotalWorth += roid.AsteroidWorth;
+                        }
+
+                        TextBoxes[2].text =
+                        $"Total Health: {TotalHealth}/{TotalMaxHealth}\nWorth: {TotalWorth}\n";
+                        return;
+                    }
+                    TextBoxes[2].text =
+                        $"Total Health: {TotalHealth}/{TotalMaxHealth}\nAttacking: Multiple\nTotal Weapon Damage: {TotalDmg} per pulse\n";
                 }
                 else
                 {
@@ -82,7 +101,7 @@ namespace Chrio.UI
                         if (dock.GetOwnerID() == 0) Construction.SetArrayActive(true);
                         HealthBar.maxValue = GlobalState.Game.Entities.Selected[0].GetData().Health;
                         HealthBar.value = GlobalState.Game.Entities.Selected[0].Health;
-                        TextBoxes[2].text = $"Health: {GlobalState.Game.Entities.Selected[0].Health}/{GlobalState.Game.Entities.Selected[0].GetData().Health}\nBuilding: {(dock.Constructing != null ? dock.Constructing.DisplayName : "Nothing")}\nV Construction V";
+                        TextBoxes[2].text = $"Health: {GlobalState.Game.Entities.Selected[0].Health}/{GlobalState.Game.Entities.Selected[0].GetData().Health * 5}\nBuilding: {(dock.Constructing != null ? dock.Constructing.DisplayName : "Nothing")}\nV Construction V";
                     }
                     else
                     {
@@ -106,5 +125,13 @@ namespace Chrio.UI
         public void ShowScreen() => Group.alpha = 1.0f;
 
         public void HideScreen() => Group.alpha = 0.0f;
+
+        public bool AllEntsOfType(string EntType)
+        {
+            foreach (IBaseEntity ent in GlobalState.Game.Entities.Selected)
+                if (!ent.CompareEntityType(EntType)) return false;
+
+            return true;
+        }
     }
 }

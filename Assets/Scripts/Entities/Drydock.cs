@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
+using static SharkUtils.ExtraFunctions;
 using System.Collections;
 using Chrio.World;
 using Chrio.World.Loading;
@@ -22,38 +22,42 @@ namespace Chrio.Entities
 
             if (Health <= 0)
             {
-                OwnerID = (OwnerID == 0 ? 1 : 0); // Swap owners
-                health = EntityData.Health; // Reset health
+                OwnerID = HitInfo.Attacker.GetOwnerID(); // Swap owners
+                health = EntityData.Health * 5; // Reset health
             }
         }
 
-        private void SpawnShip(SpaceshipData Data, int TeamID)
+        public static void SpawnShip(Game_State.State GState, Transform SpawnLocation, SpaceshipData Data, int TeamID)
         {
-            GameObject _newShip = (GameObject)Instantiate(Resources.Load("Spaceship"), transform.position, transform.rotation, transform.parent);
+            GameObject _newShip = (GameObject)Instantiate(Resources.Load("Spaceship"), SpawnLocation.position, SpawnLocation.rotation, SpawnLocation.parent);
+            _newShip.transform.eulerAngles = Vector3.zero;
             IBaseEntity _shipEnt = _newShip.GetComponent<IBaseEntity>();
             Spaceship ship = _shipEnt as Spaceship;
 
             _shipEnt.GetEntity().OwnerID = TeamID;
+            ship.Data = Data;
+            ship.EntityData = Data;
+            ship.Turret.Info = Data.Weapon;
 
-            ship.OnLoad(GlobalState, Dummy);
-            ship.Turret.OnLoad(GlobalState, Dummy);
+            ship.OnLoad(GState, Dummy); // Init ship
+            ship.Turret.OnLoad(GState, Dummy); // Init ship turret
 
-            _shipEnt.OnCommand( // Give the newly created ship a move order so it get's away from us
+            /*_shipEnt.OnCommand( // Give the newly created ship a move order so it get's away from us
                 new Controls.Command(
-                Controls.CommandType.Move, 
-                (transform.position + (transform.forward * 2)).ToString(), 
+                Controls.CommandType.Move,
+                (SpawnLocation.position + (SpawnLocation.up * 2)).ToString(),
                 TeamID)
-                );
+                );*/
 
-            GlobalState.Game.Entities.AddEntity(_newShip.GetInstanceID(), _newShip, _shipEnt);
+            GState.Game.Entities.AddEntity(_newShip.GetInstanceID(), _newShip, _shipEnt);
         }
 
-        public void Dummy() { }
+        public static void Dummy() { }
 
         public void BuildShip(SpaceshipData Data, int TeamID)
         {
-            if (Constructing != null) return;
-            if (GlobalState.Game.Money[TeamID] < Data.ConstructionCost) return;
+            if (Constructing != null) { infoPopupController.ShowMessage("This drydock is already building something!"); return; }
+            if (GlobalState.Game.Money[TeamID] < Data.ConstructionCost) { infoPopupController.ShowMessage($"You need {Data.ConstructionCost} currency to build that!"); return; }
             GlobalState.Game.Money[TeamID] -= Data.ConstructionCost;
             StartCoroutine(Construct(Data, TeamID));
         }
@@ -63,7 +67,7 @@ namespace Chrio.Entities
             Constructing = Data;
             yield return new WaitForSeconds(Data.ConstructionTime);
 
-            SpawnShip(Data, TeamID);
+            SpawnShip(GlobalState, transform, Data, TeamID);
             Constructing = null;
         }
     }

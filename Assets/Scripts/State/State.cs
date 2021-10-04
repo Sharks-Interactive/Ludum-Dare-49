@@ -76,6 +76,19 @@ namespace Chrio.World
                 WorldEntities.Add(EntObject, Ent);
                 EntityIDs.Add(EntObject.GetInstanceID(), Ent);
             }
+
+            public static void InitEntity<T>(GameObject NewEntity, State GlobalState, EntityData Data, int TeamID) where T : Asteroid
+            {
+                IBaseEntity Entity = NewEntity.GetComponent<IBaseEntity>();
+                T EntBehaviour = Entity.GetEntity() as T;
+
+                EntBehaviour.OwnerID = TeamID;
+                EntBehaviour.EntityData = Data;
+
+                EntBehaviour.OnLoad(GlobalState, Drydock.Dummy); // Init ship
+
+                GlobalState.Game.Entities.AddEntity(NewEntity.GetInstanceID(), NewEntity, Entity.GetEntity());
+            }
         }
 
         public class State

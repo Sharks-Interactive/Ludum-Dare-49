@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c514f57774348384b8c3abc85e0a0df7, type: 3}
+  m_Name: Frigate
+  m_EditorClassIdentifier: 
+  Health: 10000
+  DisplayName: Frigate
+  ShortDescription: A slow hulking craft with low damage output and high health.
+  MaxSpeed: 5
+  Acceleration: 1
+  Weapon: {fileID: 11400000, guid: d5a07e8b9ffb03f46b4604256684bbb2, type: 2}
+  ConstructionTime: 25
+  ConstructionCost: 1000
+  Range: 7

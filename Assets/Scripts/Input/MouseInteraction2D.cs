@@ -65,19 +65,7 @@ namespace Chrio.Interaction
         {
             // Check if we already have stuff selected
             if (GlobalState.Game.Entities.Selected.Count > 0)
-                foreach (IBaseEntity ent in GlobalState.Game.Entities.Selected) // If we do loop through each one deselect it and issue a move command
-                {
-                    ent.OnDeselected();
-                    ent.OnCommand(new Command( // Issue move order
-                    CommandType.Move,
-                    RandomPointInsideCircle(GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition), 3).ToString("F6"), // Randomize for multi select
-                    0
-                    ));
-                }
-
-            GlobalState.Game.Entities.Selected.Clear();
-            prevSelected = null;
-            curSelected = null;
+                MoveOrderToMouse(true);
         }
 
         private void OnDifferentSelected()
@@ -106,6 +94,16 @@ namespace Chrio.Interaction
                     DeselectAll(); // If it is already selected then deselect everything
                 else
                 {
+                    if (curSelected.GetOwnerID() != 0) // If the selected unit is an enemy we want our ships to attack it
+                    {
+                        MoveOrderToMouse(false);
+
+                        GlobalState.Game.Entities.Selected.Add(curSelected);
+                        curSelected.OnSelected(); // Select the enemy unit
+
+                        return;
+                    }
+
                     // If it is not already selected then let's select it and deselect everything else
                     // Deselect everything that exists so far
                     DeselectAll();
@@ -155,6 +153,24 @@ namespace Chrio.Interaction
                 t_ent.OnDeselected();
 
             GlobalState.Game.Entities.Selected.Clear();
+        }
+
+        private void MoveOrderToMouse(bool ClearAfter)
+        {
+            foreach (IBaseEntity ent in GlobalState.Game.Entities.Selected) // If we do loop through each one deselect it and issue a move command
+            {
+                ent.OnDeselected();
+                ent.OnCommand(new Command( // Issue move order
+                CommandType.Move,
+                RandomPointInsideCircle(GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition), 3).ToString("F6"), // Randomize for multi select
+                0
+                ));
+            }
+
+            GlobalState.Game.Entities.Selected.Clear();
+            prevSelected = null;
+            if (ClearAfter)
+                curSelected = null;
         }
     }
 }

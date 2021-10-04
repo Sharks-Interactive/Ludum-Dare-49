@@ -22,7 +22,7 @@ namespace Chrio.Entities
 
             if (health <= 0 && gameObject.activeInHierarchy)
             {
-                GlobalState.Game.Money[HitInfo.Attacker.GetOwnerID()] += 300;
+                GlobalState.Game.Money[HitInfo.Attacker.GetOwnerID()] += AsteroidWorth;
                 GlobalState.Game.Entities.WorldEntities.Remove(gameObject);
                 gameObject.SetActive(false);
             }

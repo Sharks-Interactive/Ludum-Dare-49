@@ -15,4 +15,6 @@ public class SpaceshipData : EntityData
     public int ConstructionTime = 1;
 
     public float ConstructionCost = 100;
+
+    public float Range = 5.59f;
 }

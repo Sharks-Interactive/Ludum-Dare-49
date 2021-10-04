@@ -28,7 +28,7 @@ namespace Chrio.World
             AttachedEntity = transform.parent.GetComponent<IBaseEntity>();
             Laser = GetComponent<LineRenderer>();
             _offset = RandomPointInsideCircle(Vector3.zero, 0.5f);
-            _offset = _offset.UpdateAxis(Random.Range(-1.0f, 1.0f), Axis.Y);
+            _offset.y = Random.Range(-1.0f, 1.0f);
 
             // Setup beam color based on teamcolor from weaponinfo
             LaserColor[0] = Info.Colors[AttachedEntity.GetOwnerID()];
@@ -74,6 +74,9 @@ namespace Chrio.World
 
             // Continous damage
             UpdateLaserPos(Target.GetGameObject().transform.position);
+            Laser.startColor = LaserColor[0];
+            Laser.endColor = LaserColor[1];
+            _weaponDmg.Amount = (_weaponDmg.Amount / 60);
             Target.OnDamaged(_weaponDmg);
         }
 

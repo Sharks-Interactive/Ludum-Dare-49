@@ -15,17 +15,39 @@ public class Spaceship : BaseEntity
     public Vector3 Velocity;
     private IBaseEntity _attackTarget = null;
 
+    private CircleCollider2D _collider;
+    private Image _range;
+    private CanvasGroup _rangeIdentifier;
+
     public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
     {
         EntityType = "Spaceship";
+        _collider = GetComponent<CircleCollider2D>();
+        _rangeIdentifier = GetComponentInChildren<CanvasGroup>();
+        _range = transform.GetChild(1).GetComponent<Image>();
+
+        _collider.radius = Data.Range;
+
         base.OnLoad(_gameState, _callback);
+    }
+
+    public override void OnSelected()
+    {
+        base.OnSelected();
+        _rangeIdentifier.alpha = 1.0f;
+    }
+
+    public override void OnDeselected()
+    {
+        base.OnDeselected();
+        _rangeIdentifier.alpha = 0.0f;
     }
 
     public override void OnDamaged(DamageInfo HitInfo)
     {
         base.OnDamaged(HitInfo);
 
-        MoveTarget += transform.forward;// * Random.Range(1, 3)); // Scramble!
+        MoveTarget = RandomPointInsideCircle(MoveTarget, 3); // Scramble!
         MoveTarget.z = 0;
 
         if (health <= 0)
@@ -38,6 +60,9 @@ public class Spaceship : BaseEntity
 
     void Update()
     {
+        // Update selection healthbar
+        _range.fillAmount = (health / Data.Health);
+
         Turret.Target = _attackTarget;
         if (MoveTarget != Vector3.zero)
         {
@@ -47,6 +72,8 @@ public class Spaceship : BaseEntity
                 transform.right += ((MoveTarget - transform.position) / Data.MaxSpeed) * Time.deltaTime * 50; // Broadside
             else
                 transform.up += ((MoveTarget - transform.position) / Data.MaxSpeed) * Time.deltaTime * 50;
+
+            rectTransform.eulerAngles = new Vector3(0, 0, rectTransform.eulerAngles.z);
         }
         if (_attackTarget == null) return;
         if (_attackTarget.GetOwnerID() == OwnerID) { _attackTarget = null; return; }// Owner could have changed

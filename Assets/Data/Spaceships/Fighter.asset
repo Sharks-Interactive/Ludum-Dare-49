@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: Fighter
   m_EditorClassIdentifier: 
   Health: 5000
-  MaxSpeed: 100
+  DisplayName: Fighter
+  ShortDescription: A quick, nimble craft with decent damage output and low health.
+  MaxSpeed: 20
   Acceleration: 5
+  Weapon: {fileID: 11400000, guid: 5aafc663e67bada4685d4f0a2ddc5025, type: 2}
+  ConstructionTime: 1
+  ConstructionCost: 100

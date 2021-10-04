@@ -13,7 +13,12 @@ namespace Chrio.Entities
 
         public List<IBaseEntity> PlayerShips = new List<IBaseEntity>();
 
-        private int _drydocksOwned = 0;
+        public List<IBaseEntity> Asteroids = new List<IBaseEntity>();
+
+        public SpaceshipData BuildableShipsDef;
+
+        public int StepSpeed = 2;
+        public float TimeAtTime;
 
         public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
         {
@@ -32,39 +37,96 @@ namespace Chrio.Entities
                 }
                 else if (ent.CompareEntityType("Spaceship"))
                     PlayerShips.Add(ent);
+                else if (ent.CompareEntityType("Asteroid"))
+                    Asteroids.Add(ent);
             }
 
             base.OnLoad(_gameState, _callback);
         }
 
         // Update is called once per frame
-        void Update()
+        void FixedUpdate()
         {
+            if (Time.time < TimeAtTime) return;
+            TimeAtTime = Time.time + StepSpeed;
+
+            #region Data Collection
+
+
+
+            Ships = new Dictionary<GameObject, IBaseEntity>();
+            Drydocks = new List<IBaseEntity>();
+
+            PlayerShips = new List<IBaseEntity>();
+
+            Asteroids = new List<IBaseEntity>();
+
+            foreach (IBaseEntity ent in GlobalState.Game.Entities.WorldEntities.Values)
+            {
+                if (ent.GetOwnerID() == 1)
+                {
+                    if (ent.CompareEntityType("Spaceship"))
+                        Ships.Add(ent.GetGameObject(), ent);
+                    else if (ent.CompareEntityType("Drydock"))
+                        Drydocks.Add(ent);
+                }
+                else if (ent.CompareEntityType("Spaceship"))
+                    PlayerShips.Add(ent);
+                else if (ent.CompareEntityType("Asteroid"))
+                    Asteroids.Add(ent);
+            }
+
             // AI has a few different targets. The first and foremost is drydocks.
-            // The ai prioritises drydocks if they are lost
+            // The ai priorities asteroids if it does not have enough money
+            // The ai then prioritises drydocks if they are lost
             // Otherwise it will go after the nearest enemy ship
-            _drydocksOwned = 0;
+            List<Drydock> _myDrydocks = new List<Drydock>();
+            List<IBaseEntity> _playerDrydocks = new List<IBaseEntity>();
             for (int g = 0; g < Drydocks.Count; g++)
                 if (Drydocks[g].GetOwnerID() == 1)
-                    _drydocksOwned++;
+                    _myDrydocks.Add(Drydocks[g] as Drydock);
+                else
+                    _playerDrydocks.Add(Drydocks[g]);
 
-            if (_drydocksOwned != Drydocks.Count) { }
+            for (int i = 0; i < _myDrydocks.Count; i++)
+                _myDrydocks[i].BuildShip(BuildableShipsDef, 1); // Make sure every drydock is building
+
+            // Check if we have enough money
+            if (BuildableShipsDef.ConstructionCost * _myDrydocks.Count >= GlobalState.Game.Money[1])
+            {
+                // We don't have enough money, send all ships to the nearest asteroids
+                SendShipsToNearestInList(Asteroids);
+                return;
+            }
+
+            if (_myDrydocks.Count != Drydocks.Count) 
+            {
+                SendShipsToNearestInList(_playerDrydocks);
+                return;
+            }
             // If there is an imbalance this is our new goal
 
             // This is really pretty bad
             // Othwerwise just attack the nearest enemy
+            SendShipsToNearestInList(PlayerShips);
+            #endregion
+        } 
+
+        private void SendShipsToNearestInList(List<IBaseEntity> Entities)
+        {
             foreach (IBaseEntity ship in Ships.Values)
             {
-                float[] Distances = new float[PlayerShips.Count];
-                for (int c = 0; c< PlayerShips.Count; c++/*Ha*/)
-                    Distances[c] = Vector2.Distance(ship.GetGameObject().transform.position, PlayerShips[c].GetGameObject().transform.position);
+                float[] Distances = new float[Entities.Count];
+                for (int c = 0; c < Entities.Count; c++/*Ha*/)
+                    Distances[c] = Vector2.Distance(ship.GetGameObject().transform.position, Entities[c].GetGameObject().transform.position);
 
-                if (PlayerShips.Count == 0) return;
+                if (Entities.Count == 0) return;
                 ship.OnCommand(new Controls.Command(
                     Controls.CommandType.Move,
-                    PlayerShips[Distances.IndexOfGreatest()].GetGameObject().transform.position.ToString()
+                    (Entities[Distances.IndexOfLeast()].GetGameObject().transform.position + transform.right * 2).ToString(), // iNSTRUCT THE SHIP TO BROADSIDE
+                    1
                     ));
             }
-        } 
+        }
     }
 }

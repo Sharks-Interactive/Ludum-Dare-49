@@ -12,6 +12,14 @@ namespace Chrio.Entities
         public DamageType Type;
         public IBaseEntity Attacker;
         public IBaseEntity Victim;
+
+        public DamageInfo (float Amt, DamageType DmgType, IBaseEntity Issuer, IBaseEntity Target)
+        {
+            Amount = Amt;
+            Type = DmgType;
+            Attacker = Issuer;
+            Victim = Target;
+        }
     }
 
     public enum DamageType

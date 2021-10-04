@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using static SharkUtils.ExtraFunctions;
 using UnityEngine;
 
 namespace Chrio.Controls
@@ -9,6 +8,9 @@ namespace Chrio.Controls
         private Camera _camera;
         public float Sensitivity;
         public float DirSensitivity;
+        private Vector3 _lastFrameMousePos = Vector3.zero;
+
+        private Vector3 _mousePosDelta = Vector3.zero;
 
         [Tooltip("MinSize, MaxSize")]
         public Vector2 SizeConstraints = new Vector2(5, 70);
@@ -19,10 +21,16 @@ namespace Chrio.Controls
             Down = 1,
         }    
 
-        void Start() { _camera = GetComponent<Camera>(); }
+        void Start() { _camera = GetComponent<Camera>(); _lastFrameMousePos = Input.mousePosition; }
 
         void Update()
         {
+            _mousePosDelta = Input.mousePosition - _lastFrameMousePos;
+            _lastFrameMousePos = Input.mousePosition;
+
+            if (Input.GetMouseButton(2))
+                _camera.transform.position += _mousePosDelta / (-62.5f + _camera.orthographicSize);
+
             if (Input.mouseScrollDelta.y == 1 && _camera.orthographicSize < SizeConstraints.y)
             {
                 MoveCamera(Dir.Up);

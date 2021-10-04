@@ -18,11 +18,13 @@ namespace Chrio.Controls
     {
         public CommandType Type;
         public string Data;
+        public int Issuer;
 
-        public Command (CommandType CmdType, string CmdData)
+        public Command (CommandType CmdType, string CmdData, int Issue)
         {
             Type = CmdType;
             Data = CmdData;
+            Issuer = Issue;
         }
     }
 }

@@ -7,6 +7,7 @@ using Chrio.Entities;
 using static Chrio.World.Game_State;
 using Chrio.World.Loading;
 using Chrio.Controls;
+using static SharkUtils.ExtraFunctions;
 
 namespace Chrio.Interaction
 {
@@ -69,7 +70,8 @@ namespace Chrio.Interaction
                     ent.OnDeselected();
                     ent.OnCommand(new Command( // Issue move order
                     CommandType.Move,
-                    GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition).ToString("F6")
+                    RandomPointInsideCircle(GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition), 3).ToString("F6"), // Randomize for multi select
+                    0
                     ));
                 }
 

@@ -1,10 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Chrio.Entities;
 using Chrio.Controls;
 using static SharkUtils.ExtraFunctions;
-using DG.Tweening;
 using UnityEngine.UI;
 using Chrio.World;
 using Chrio.World.Loading;
@@ -12,15 +9,14 @@ using Chrio.World.Loading;
 public class Spaceship : BaseEntity
 {
     public SpaceshipData Data;
+    public TurretController Turret;
     protected Vector3 MoveTarget = Vector3.zero;
-    public float Speed = 10.0f;
-    public float Accel;
+    
     public Vector3 Velocity;
-    public Image Renderer;
+    private IBaseEntity _attackTarget = null;
 
     public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
     {
-        Renderer = GetComponent<Image>();
         EntityType = "Spaceship";
         base.OnLoad(_gameState, _callback);
     }
@@ -29,42 +25,67 @@ public class Spaceship : BaseEntity
     {
         base.OnDamaged(HitInfo);
 
+        MoveTarget += transform.forward;// * Random.Range(1, 3)); // Scramble!
+        MoveTarget.z = 0;
+
+        if (health <= 0)
+        {
+            GlobalState.Game.Entities.WorldEntities.Remove(gameObject);
+            gameObject.SetActive(false);
+        }
         // Show effects
     }
 
     void Update()
     {
+        Turret.Target = _attackTarget;
         if (MoveTarget != Vector3.zero)
         {
             rectTransform.position = Vector3.SmoothDamp(rectTransform.position, MoveTarget, ref Velocity, Data.Acceleration, Data.MaxSpeed, Time.deltaTime);
-            transform.up += ((MoveTarget - transform.position) / Data.MaxSpeed) * Time.deltaTime * 50;
+
+            if (Vector2.Distance(MoveTarget, transform.position) < 3)
+                transform.right += ((MoveTarget - transform.position) / Data.MaxSpeed) * Time.deltaTime * 50; // Broadside
+            else
+                transform.up += ((MoveTarget - transform.position) / Data.MaxSpeed) * Time.deltaTime * 50;
         }
+        if (_attackTarget == null) return;
+        if (_attackTarget.GetOwnerID() == OwnerID) { _attackTarget = null; return; }// Owner could have changed
+        if (_attackTarget.Health <= 0) _attackTarget = null; // Target could have died
     }
 
-    public override void OnSelected()
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        Renderer.DOColor(Color.blue, 0.2f); // Change color on selection!!!
+        IBaseEntity _tochingEntity;
+
+        if (!collision.CompareTag("Entity")) return; // We're only interested in Entities
+        if (!GlobalState.Game.Entities.WorldEntities.TryGetValue(collision.gameObject, out _tochingEntity)) return; // GlobalState is not aware of this entity
+        if (_tochingEntity.GetOwnerID() == OwnerID) return; // The entity is not an enemy
+        if (_attackTarget != null) return; // We are already attacking soemthing
+
+        _attackTarget = _tochingEntity;
     }
 
-    public override void WhileSelected()
+    public void OnTriggerExit2D(Collider2D collision)
     {
-        base.WhileSelected();
-    }
+        IBaseEntity _tochingEntity;
 
-    public override void OnDeselected()
-    {
-        base.OnDeselected();
-        Renderer.DOColor(Color.white, 0.2f); // Change color on selection!!!
+        if (!collision.CompareTag("Entity")) return; // We're only interested in Entities
+        if (!GlobalState.Game.Entities.WorldEntities.TryGetValue(collision.gameObject, out _tochingEntity)) return; // GlobalState is not aware of this entity
+        if (_tochingEntity.GetOwnerID() == OwnerID) return; // The entity is not an enemy
+        if (_attackTarget != _tochingEntity) return; // We are not attacking this ent
+
+        _attackTarget = null; // The ent is out of range
     }
 
     public override void OnCommand(Command CmdInfo)
     {
+        if (CmdInfo.Issuer != OwnerID) return;
         base.OnCommand(CmdInfo);
 
         switch(CmdInfo.Type)
         {
             case CommandType.Move:
-                MoveTarget = RandomPointInsideCircle(MoveTarget.Parse(CmdInfo.Data), 2);
+                MoveTarget = MoveTarget.Parse(CmdInfo.Data);
                 MoveTarget.z = 0;
                 break;
         }

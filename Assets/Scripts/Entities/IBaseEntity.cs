@@ -18,6 +18,8 @@ namespace Chrio.Entities
 
         public BaseEntity GetEntity();
 
+        public EntityData GetData();
+
         public GameObject GetGameObject();
 
         public int GetOwnerID();

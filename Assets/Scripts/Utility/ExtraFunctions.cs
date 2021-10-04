@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -323,6 +324,70 @@ namespace SharkUtils
         //Defining a public random for the whole library to use
         private static System.Random rng = new System.Random();
 
+        public static float SumOfVector2 (this Vector2 _vector) => _vector.x + _vector.y;
+        public static float SumOfVector2(this Vector3 _vector) => _vector.x + _vector.y;
+
+        public static float SumOfVector3(this Vector3 _vector) => _vector.x + _vector.y + _vector.z;
+
+        public static float AbsSumOfVector2(this Vector2 _vector) => Mathf.Abs(_vector.x) + Mathf.Abs(_vector.y);
+        public static float AbsSumOfVector2(this Vector3 _vector) => Mathf.Abs(_vector.x) + Mathf.Abs(_vector.y);
+
+        public static float AbsSumOfVector3(this Vector3 _vector) => Mathf.Abs(_vector.x) + Mathf.Abs(_vector.y) + Mathf.Abs(_vector.z);
+
+        public static Vector3 ToVector3 (this Vector2 _vector) => new Vector3(_vector.x, _vector.y, 0);
+
+        public static Vector3 ToVector3(this Vector2 _vector, float zValue) => new Vector3(_vector.x, _vector.y, zValue);
+
+        public static Vector2 ToVector2(this Vector3 _vector) => new Vector2(_vector.x, _vector.y);
+
+        public static void SetArrayActive(this GameObject[] _arr, bool Active)
+        {
+            for (int i = 0; i < _arr.Length; i++)
+                _arr[i].SetActive(Active);
+        }
+
+        public static Vector3 NormalizedMousePosition()
+        {
+            float mouseRatioX = Input.mousePosition.x / Screen.width;
+            float mouseRatioY = Input.mousePosition.y / Screen.height;
+
+            return new Vector3(mouseRatioX - 0.5f, mouseRatioY - 0.5f, 0f);
+        }
+
+        public enum Axis
+        {
+            X,
+            Y,
+            Z
+        }
+        /// <summary>
+        /// Updates a single axis of a Vector3
+        /// </summary>
+        /// <param name="_vector"> (Extension Method) </param>
+        /// <param name="Value"> The value to set the axis to. </param>
+        /// <param name="Constraint"> The axis to set. </param>
+        /// <returns> The update vector3. </returns>
+        public static Vector3 UpdateAxis(this Vector3 _vector, float Value, Axis Constraint)
+        {
+            switch (Constraint)
+            {
+                case Axis.X:
+                    _vector.Set(Value, _vector.y, _vector.z);
+                    break;
+
+                case Axis.Y:
+                    _vector.Set(_vector.x, Value, _vector.z);
+                    break;
+
+                case Axis.Z:
+                    _vector.Set(_vector.x, _vector.y, Value);
+                    break;
+            }
+            return _vector;
+        }
+
+        public static Color2 GetColor2(this Color[] colors) => new Color2(colors[0], colors[1]);
+
         public static float Greatest(this float[] _arr)
         {
             float greatest = 0;
@@ -340,6 +405,29 @@ namespace SharkUtils
                 if (_arr[i] > greatest)
                 {
                     greatest = _arr[i];
+                    index = i;
+                }
+
+            return index;
+        }
+
+        public static float Least(this float[] _arr)
+        {
+            float least = 9999999;
+            for (int i = 0; i < _arr.Length; i++)
+                if (_arr[i] > least) least = _arr[i];
+
+            return least;
+        }
+
+        public static int IndexOfLeast(this float[] _arr)
+        {
+            float least = 9999999;
+            int index = 0;
+            for (int i = 0; i < _arr.Length; i++)
+                if (_arr[i] < least)
+                {
+                    least = _arr[i];
                     index = i;
                 }
 

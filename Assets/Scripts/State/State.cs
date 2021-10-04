@@ -30,6 +30,7 @@ namespace Chrio.World
             public bool Running;
             public Entities Entities;
             public Camera MainCamera;
+            public Vector2 Money = new Vector2(0, 0);
 
             public Game()
             {
@@ -63,6 +64,18 @@ namespace Chrio.World
             }
 
             public IBaseEntity GetEntityByID (int ID) => EntityIDs.ContainsKey(ID) ? EntityIDs[ID] : null;
+            
+            /// <summary>
+            /// Adds an entity to the global state
+            /// </summary>
+            /// <param name="ID"> ID Of the entity to add. </param>
+            /// <param name="EntObject"> The gameobejct of the entity to add. </param>
+            /// <param name="Ent"> A reference to the entities entity </param>
+            public void AddEntity(int ID, GameObject EntObject, IBaseEntity Ent)
+            {
+                WorldEntities.Add(EntObject, Ent);
+                EntityIDs.Add(EntObject.GetInstanceID(), Ent);
+            }
         }
 
         public class State

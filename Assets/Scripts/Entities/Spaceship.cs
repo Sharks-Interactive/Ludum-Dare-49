@@ -65,6 +65,18 @@ public class Spaceship : BaseEntity
         _attackTarget = _tochingEntity;
     }
 
+    public void OnTriggerStay2D(Collider2D collision)
+    {
+        IBaseEntity _tochingEntity;
+
+        if (_attackTarget != null) return; // We are already attacking soemthing
+        if (!collision.CompareTag("Entity")) return; // We're only interested in Entities
+        if (!GlobalState.Game.Entities.WorldEntities.TryGetValue(collision.gameObject, out _tochingEntity)) return; // GlobalState is not aware of this entity
+        if (_tochingEntity.GetOwnerID() == OwnerID) return; // The entity is not an enemy
+
+        _attackTarget = _tochingEntity;
+    }
+
     public void OnTriggerExit2D(Collider2D collision)
     {
         IBaseEntity _tochingEntity;

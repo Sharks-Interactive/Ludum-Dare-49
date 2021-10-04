@@ -20,7 +20,7 @@ namespace Chrio.Entities
         {
             base.OnDamaged(HitInfo);
 
-            if (health <= 0)
+            if (health <= 0 && gameObject.activeInHierarchy)
             {
                 GlobalState.Game.Money[HitInfo.Attacker.GetOwnerID()] += 300;
                 GlobalState.Game.Entities.WorldEntities.Remove(gameObject);

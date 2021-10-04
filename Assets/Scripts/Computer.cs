@@ -67,13 +67,13 @@ namespace Chrio.Entities
                 {
                     if (ent.CompareEntityType("Spaceship"))
                         Ships.Add(ent.GetGameObject(), ent);
-                    else if (ent.CompareEntityType("Drydock"))
-                        Drydocks.Add(ent);
                 }
                 else if (ent.CompareEntityType("Spaceship"))
                     PlayerShips.Add(ent);
                 else if (ent.CompareEntityType("Asteroid"))
                     Asteroids.Add(ent);
+                else if (ent.CompareEntityType("Drydock"))
+                    Drydocks.Add(ent);
             }
 
             // AI has a few different targets. The first and foremost is drydocks.
@@ -82,11 +82,14 @@ namespace Chrio.Entities
             // Otherwise it will go after the nearest enemy ship
             List<Drydock> _myDrydocks = new List<Drydock>();
             List<IBaseEntity> _playerDrydocks = new List<IBaseEntity>();
+            List<IBaseEntity> _neutralDrydocks = new List<IBaseEntity>();
             for (int g = 0; g < Drydocks.Count; g++)
                 if (Drydocks[g].GetOwnerID() == 1)
                     _myDrydocks.Add(Drydocks[g] as Drydock);
-                else
+                else if (Drydocks[g].GetOwnerID() == 0)
                     _playerDrydocks.Add(Drydocks[g]);
+                else
+                    _neutralDrydocks.Add(Drydocks[g]);
 
             for (int i = 0; i < _myDrydocks.Count; i++)
                 _myDrydocks[i].BuildShip(BuildableShipsDef, 1); // Make sure every drydock is building
@@ -101,7 +104,10 @@ namespace Chrio.Entities
 
             if (_myDrydocks.Count != Drydocks.Count) 
             {
-                SendShipsToNearestInList(_playerDrydocks);
+                if (_neutralDrydocks.Count > _playerDrydocks.Count)
+                    SendShipsToNearestInList(_neutralDrydocks);
+                else
+                    SendShipsToNearestInList(_playerDrydocks);
                 return;
             }
             // If there is an imbalance this is our new goal

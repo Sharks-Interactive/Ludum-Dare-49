@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccb16feaabcb2d4a94a8f5c00812bd6, type: 3}
   m_Name: Drydock
   m_EditorClassIdentifier: 
-  Health: 50000
+  Health: 10000
   DisplayName: Drydock
   ShortDescription: A orbital shipyard that can produce new ships.

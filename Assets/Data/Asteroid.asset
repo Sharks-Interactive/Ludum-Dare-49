@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccb16feaabcb2d4a94a8f5c00812bd6, type: 3}
   m_Name: Asteroid
   m_EditorClassIdentifier: 
-  Health: 25000
+  Health: 7500
   DisplayName: Asteroid
   ShortDescription: A lone asteroid. Destroying it with your ships will grant you
     money to speed up production.

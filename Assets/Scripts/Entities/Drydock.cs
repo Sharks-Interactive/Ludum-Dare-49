@@ -29,19 +29,23 @@ namespace Chrio.Entities
 
         private void SpawnShip(SpaceshipData Data, int TeamID)
         {
-            GameObject _newShip = (GameObject)Instantiate(Resources.Load("Spaceship"), transform.position, transform.rotation);
+            GameObject _newShip = (GameObject)Instantiate(Resources.Load("Spaceship"), transform.position, transform.rotation, transform.parent);
             IBaseEntity _shipEnt = _newShip.GetComponent<IBaseEntity>();
             Spaceship ship = _shipEnt as Spaceship;
 
-            ship.OnLoad(GlobalState, Dummy);
-
             _shipEnt.GetEntity().OwnerID = TeamID;
+
+            ship.OnLoad(GlobalState, Dummy);
+            ship.Turret.OnLoad(GlobalState, Dummy);
+
             _shipEnt.OnCommand( // Give the newly created ship a move order so it get's away from us
                 new Controls.Command(
                 Controls.CommandType.Move, 
-                (transform.position + transform.forward).ToString(), 
+                (transform.position + (transform.forward * 2)).ToString(), 
                 TeamID)
                 );
+
+            GlobalState.Game.Entities.AddEntity(_newShip.GetInstanceID(), _newShip, _shipEnt);
         }
 
         public void Dummy() { }

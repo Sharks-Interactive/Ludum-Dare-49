@@ -39,7 +39,7 @@ namespace Chrio.UI
                         Drydock dock = GlobalState.Game.Entities.Selected[0].GetEntity() as Drydock;
                         TotalHealth += ent.Health;
                         if (dock != null)
-                            TotalMaxHealth += ent.GetData().Health * 5;
+                            TotalMaxHealth += ent.GetData().Health * (dock.GetOwnerID() == 2 ? 1 : 5);
                         else
                             TotalMaxHealth += ent.GetData().Health;
 
@@ -101,7 +101,7 @@ namespace Chrio.UI
                         if (dock.GetOwnerID() == 0) Construction.SetArrayActive(true);
                         HealthBar.maxValue = GlobalState.Game.Entities.Selected[0].GetData().Health;
                         HealthBar.value = GlobalState.Game.Entities.Selected[0].Health;
-                        TextBoxes[2].text = $"Health: {GlobalState.Game.Entities.Selected[0].Health}/{GlobalState.Game.Entities.Selected[0].GetData().Health * 5}\nBuilding: {(dock.Constructing != null ? dock.Constructing.DisplayName : "Nothing")}\nV Construction V";
+                        TextBoxes[2].text = $"Health: {GlobalState.Game.Entities.Selected[0].Health}/{GlobalState.Game.Entities.Selected[0].GetData().Health * (dock.GetOwnerID() == 2 ? 1 : 5)}\nBuilding: {(dock.Constructing != null ? dock.Constructing.DisplayName : "Nothing")}\nV Construction V";
                     }
                     else
                     {

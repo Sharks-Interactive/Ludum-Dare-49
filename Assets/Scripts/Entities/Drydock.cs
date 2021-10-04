@@ -56,8 +56,8 @@ namespace Chrio.Entities
 
         public void BuildShip(SpaceshipData Data, int TeamID)
         {
-            if (Constructing != null) { infoPopupController.ShowMessage("This drydock is already building something!"); return; }
-            if (GlobalState.Game.Money[TeamID] < Data.ConstructionCost) { infoPopupController.ShowMessage($"You need {Data.ConstructionCost} currency to build that!"); return; }
+            if (Constructing != null) { if (TeamID == 0) infoPopupController.ShowMessage("This drydock is already building something!"); return; }
+            if (GlobalState.Game.Money[TeamID] < Data.ConstructionCost) { if (TeamID == 0) infoPopupController.ShowMessage($"You need {Data.ConstructionCost} currency to build that!"); return; }
             GlobalState.Game.Money[TeamID] -= Data.ConstructionCost;
             StartCoroutine(Construct(Data, TeamID));
         }

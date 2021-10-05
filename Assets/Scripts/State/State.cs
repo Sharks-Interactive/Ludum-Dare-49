@@ -30,6 +30,7 @@ namespace Chrio.World
             public bool Running;
             public Entities Entities;
             public Camera MainCamera;
+            public CameraShake Shake;
             public Vector2 Money = new Vector2(0, 0);
 
             public Game()
@@ -37,6 +38,7 @@ namespace Chrio.World
                 Entities = new Entities();
                 Running = true;
                 MainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+                Shake = MainCamera.transform.parent.GetComponent<CameraShake>();
             }
         }
 

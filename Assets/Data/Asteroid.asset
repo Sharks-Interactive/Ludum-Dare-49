@@ -16,3 +16,4 @@ MonoBehaviour:
   DisplayName: Asteroid
   ShortDescription: A lone asteroid. Destroying it with your ships will grant you
     money to speed up production.
+  EntitySprite: {fileID: -1839377291145181718, guid: 0ef44efd61928094fb790db660dad764, type: 3}

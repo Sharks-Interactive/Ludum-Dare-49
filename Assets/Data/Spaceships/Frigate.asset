@@ -15,9 +15,11 @@ MonoBehaviour:
   Health: 10000
   DisplayName: Frigate
   ShortDescription: A slow hulking craft with low damage output and high health.
+  EntitySprite: {fileID: 7918522965169776436, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}
   MaxSpeed: 5
   Acceleration: 1
   Weapon: {fileID: 11400000, guid: d5a07e8b9ffb03f46b4604256684bbb2, type: 2}
   ConstructionTime: 25
   ConstructionCost: 1000
   Range: 7
+  TurretSprite: {fileID: 2347532270071011419, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}

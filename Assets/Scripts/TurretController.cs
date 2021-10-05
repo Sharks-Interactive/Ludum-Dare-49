@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using static SharkUtils.ExtraFunctions;
+using UnityEngine.UI;
+using SharkUtils;
 
 namespace Chrio.World
 {
@@ -19,13 +21,18 @@ namespace Chrio.World
         private Color[] LaserColor = new Color[2];
         private Color2 _clearColor = new Color2(Color.clear, Color.clear);
         private DamageInfo _weaponDmg;
+        public Image imageRenderer;
 
         private Vector3 _offset;
 
         // Start is called before the first frame update
         public override void OnLoad(Game_State.State _gameState, Loading.ILoadableObject.CallBack _callback)
         {
+            imageRenderer = GetComponent<Image>();
             AttachedEntity = transform.parent.GetComponent<IBaseEntity>();
+            Spaceship ship = AttachedEntity as Spaceship;
+            imageRenderer.sprite = ship.Data.TurretSprite;
+
             Laser = GetComponent<LineRenderer>();
             _offset = RandomPointInsideCircle(Vector3.zero, 0.5f);
             _offset.y = Random.Range(-1.0f, 1.0f);
@@ -74,6 +81,8 @@ namespace Chrio.World
 
             // Continous damage
             UpdateLaserPos(Target.GetGameObject().transform.position);
+            if (GlobalState.Game.MainCamera.OrthographicBounds().Contains(imageRenderer.rectTransform.position))
+                GlobalState.Game.Shake.Shake(0.16f, 0.1f);
             Laser.startColor = LaserColor[0];
             Laser.endColor = LaserColor[1];
             _weaponDmg.Amount = (_weaponDmg.Amount / 60);
@@ -99,6 +108,9 @@ namespace Chrio.World
             // Show the laser
             Laser.startColor = LaserColor[0];
             Laser.endColor = LaserColor[1];
+
+            if (GlobalState.Game.MainCamera.OrthographicBounds().Contains(imageRenderer.rectTransform.position))
+                GlobalState.Game.Shake.Shake();
 
             // Fade it out as part of the "pulse"
             Laser.DOColor(LaserColor.GetColor2(), _clearColor, Info.Cooldown / 2);

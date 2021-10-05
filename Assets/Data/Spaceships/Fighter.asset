@@ -15,8 +15,11 @@ MonoBehaviour:
   Health: 1000
   DisplayName: Fighter
   ShortDescription: A quick, nimble craft with decent damage output and low health.
+  EntitySprite: {fileID: -465877756999394448, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}
   MaxSpeed: 20
   Acceleration: 5
   Weapon: {fileID: 11400000, guid: 5aafc663e67bada4685d4f0a2ddc5025, type: 2}
   ConstructionTime: 1
   ConstructionCost: 150
+  Range: 5.59
+  TurretSprite: {fileID: -4925448337817528618, guid: 8601318dadd3aa545a6a581741e997d2, type: 3}

@@ -16,3 +16,4 @@ MonoBehaviour:
   DisplayName: Rich Asteroid
   ShortDescription: A lone asteroid. Destroying it with your ships will grant you
     money to speed up production.
+  EntitySprite: {fileID: -2334179975098904272, guid: cc0013a767ec24544a1605bda6902fe0, type: 3}

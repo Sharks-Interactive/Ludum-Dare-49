@@ -71,7 +71,7 @@ namespace Chrio.UI
                 }
                 else
                 {
-                    TextBoxes[0].text = (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 1 ? "Enemy " : "") + GlobalState.Game.Entities.Selected[0].GetData().DisplayName;
+                    TextBoxes[0].text = (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 1 ? "Enemy " : "") + (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 2 ? "Neutral " : "") + GlobalState.Game.Entities.Selected[0].GetData().DisplayName;
                     TextBoxes[1].text = GlobalState.Game.Entities.Selected[0].GetData().ShortDescription;
 
                     Spaceship ship = GlobalState.Game.Entities.Selected[0].GetEntity() as Spaceship;

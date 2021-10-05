@@ -15,3 +15,4 @@ MonoBehaviour:
   Health: 10000
   DisplayName: Drydock
   ShortDescription: A orbital shipyard that can produce new ships.
+  EntitySprite: {fileID: -7383382961532566217, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}

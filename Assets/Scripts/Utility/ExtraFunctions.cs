@@ -458,6 +458,47 @@ namespace SharkUtils
         }
 
 
+        public static Bounds OrthographicBounds(this Camera camera)
+        {
+            float screenAspect = (float)Screen.width / (float)Screen.height;
+            float cameraHeight = camera.orthographicSize * 2;
+            Bounds bounds = new Bounds(
+                camera.transform.position,
+                new Vector3(cameraHeight * screenAspect, cameraHeight, 0));
+            return bounds;
+        }
+
+        //// <summary>
+        /// Updates a single axis of a Col9or
+        /// </summary>
+        /// <param name="_vector"> (Extension Method) </param>
+        /// <param name="Value"> The value to set the axis to. </param>
+        /// <param name="Constraint"> The axis to set. </param>
+        /// <returns> The update vector3. </returns>
+        public static Color UpdateColor(this Color _color, float Value, Axis Constraint)
+        {
+            switch (Constraint)
+            {
+                case Axis.X:
+                    _color = new Color(Value, _color.g, _color.b, _color.a);
+                    break;
+
+                case Axis.Y:
+                    _color = new Color(_color.r, Value, _color.b, _color.a);
+                    break;
+
+                case Axis.Z:
+                    _color = new Color(_color.r, _color.g, Value, _color.a);
+                    break;
+
+                case Axis.W:
+                    _color = new Color(_color.r, _color.g, _color.b, Value);
+                    break;
+            }
+            return _color;
+        }
+
+
         public static Color2 GetColor2(this Color[] colors) => new Color2(colors[0], colors[1]);
 
         public static float Greatest(this float[] _arr)

@@ -17,4 +17,6 @@ public class SpaceshipData : EntityData
     public float ConstructionCost = 100;
 
     public float Range = 5.59f;
+
+    public Sprite TurretSprite;
 }

@@ -28,7 +28,7 @@ namespace Chrio.Controls
             _mousePosDelta = Input.mousePosition - _lastFrameMousePos;
             _lastFrameMousePos = Input.mousePosition;
 
-            if (Input.GetMouseButton(2))
+            if (Input.GetMouseButton(2) || Input.GetMouseButton(1) || (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))))
                 _camera.transform.position += _mousePosDelta / (-62.5f + _camera.orthographicSize);
 
             if (Input.mouseScrollDelta.y == 1 && _camera.orthographicSize < SizeConstraints.y)

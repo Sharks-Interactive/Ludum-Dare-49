@@ -24,13 +24,13 @@ namespace Chrio.Utilities
         private int _repetitions = 0;
 
         // Update is called once per frame
-        void OnAwake()
+        void Start()
         {
-            if (_repetitions < MaxRuns) StartCoroutine("Wait");
+            if (_repetitions < MaxRuns) StartCoroutine(Wait());
             _repetitions++;
         }
         //Wait time before disabling the text
-        IEnumerator Wait()
+        public IEnumerator Wait()
         {
             yield return new WaitForSeconds(Time);
             m_OnTime.Invoke();

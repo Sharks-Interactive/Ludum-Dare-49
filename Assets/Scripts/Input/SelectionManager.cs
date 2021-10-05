@@ -22,13 +22,13 @@ namespace Chrio.Controls
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
             {
                 _waitTime = Time.time + Delay;
                 _startPos = GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition);
             }
 
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && !(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)))
                 if (Time.time > _waitTime)
                 {
                     _img.enabled = true;

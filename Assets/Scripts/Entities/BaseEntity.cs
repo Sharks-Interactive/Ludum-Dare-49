@@ -28,6 +28,7 @@ namespace Chrio.Entities
             imageRenderer = GetComponent<Image>();
             rectTransform = GetComponent<RectTransform>();
             health = EntityData.Health;
+            imageRenderer.sprite = EntityData.EntitySprite;
 
             base.OnLoad(_gameState, _callback);
         }

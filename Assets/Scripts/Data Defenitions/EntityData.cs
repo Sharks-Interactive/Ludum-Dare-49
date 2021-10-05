@@ -13,4 +13,6 @@ public class EntityData : ScriptableObject
     [Tooltip("One line description for this entity")]
     [TextArea(3, 10)]
     public string ShortDescription;
+
+    public Sprite EntitySprite;
 }

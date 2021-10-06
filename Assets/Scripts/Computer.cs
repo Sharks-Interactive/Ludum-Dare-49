@@ -51,6 +51,8 @@ namespace Chrio.Entities
                     Asteroids.Add(ent);
             }
 
+            StepSpeed = PlayerPrefs.GetInt("Difficulty", 2);
+
             base.OnLoad(_gameState, _callback);
         }
 

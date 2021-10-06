@@ -78,8 +78,6 @@ namespace Chrio.World.Loading
                 yield return null;
             }
 
-            GameState = new Game_State.State();
-
             StartScriptLoading();
 
             while (_loadedScripts < _totalScripts)
@@ -106,6 +104,8 @@ namespace Chrio.World.Loading
             ExtraFunctions.GetAllInterfaces<ILoadableObject>(out _interfaceList);
 
             _totalScripts = _interfaceList.Count;
+            GameState = new Game_State.State();
+
             foreach (ILoadableObject t_lO in _interfaceList)
                 t_lO.OnLoad(GameState, ScriptLoadComplete);
         }

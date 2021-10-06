@@ -71,11 +71,15 @@ namespace Chrio.UI
                 }
                 else
                 {
-                    TextBoxes[0].text = (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 1 ? "Enemy " : "") + (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 2 ? "Neutral " : "") + GlobalState.Game.Entities.Selected[0].GetData().DisplayName;
+                    Asteroid roid = GlobalState.Game.Entities.Selected[0].GetEntity() as Asteroid;
+                    if (roid == null)
+                        TextBoxes[0].text = (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 1 ? "Enemy " : "") + (GlobalState.Game.Entities.Selected[0].GetOwnerID() == 2 ? "Neutral " : "") + GlobalState.Game.Entities.Selected[0].GetData().DisplayName;
+                    else
+                        TextBoxes[0].text = GlobalState.Game.Entities.Selected[0].GetData().DisplayName;
+
                     TextBoxes[1].text = GlobalState.Game.Entities.Selected[0].GetData().ShortDescription;
 
                     Spaceship ship = GlobalState.Game.Entities.Selected[0].GetEntity() as Spaceship;
-                    Asteroid roid = GlobalState.Game.Entities.Selected[0].GetEntity() as Asteroid;
                     Drydock dock = GlobalState.Game.Entities.Selected[0].GetEntity() as Drydock;
                     if (ship != null)
                     {

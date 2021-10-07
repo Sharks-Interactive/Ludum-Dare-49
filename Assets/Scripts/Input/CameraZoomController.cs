@@ -21,7 +21,7 @@ namespace Chrio.Controls
             Down = 1,
         }    
 
-        void Start() { _camera = GetComponent<Camera>(); _lastFrameMousePos = Input.mousePosition; }
+        void Start() { _camera = GetComponent<Camera>(); _lastFrameMousePos = Input.mousePosition; Cursor.lockState = CursorLockMode.Confined; }
 
         void Update()
         {
@@ -31,12 +31,12 @@ namespace Chrio.Controls
             if (Input.GetMouseButton(2) || Input.GetMouseButton(1) || (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))))
                 _camera.transform.position += _mousePosDelta / (-62.5f + _camera.orthographicSize);
 
-            if (Input.mouseScrollDelta.y == 1 && _camera.orthographicSize < SizeConstraints.y)
+            if (Input.mouseScrollDelta.y > 0 && _camera.orthographicSize < SizeConstraints.y)
             {
                 MoveCamera(Dir.Up);
                 _camera.orthographicSize += Sensitivity;
             }
-            else if (Input.mouseScrollDelta.y == -1 && _camera.orthographicSize > SizeConstraints.x)
+            else if (Input.mouseScrollDelta.y < 0 && _camera.orthographicSize > SizeConstraints.x)
             {
                 MoveCamera(Dir.Down);
                 _camera.orthographicSize -= Sensitivity;

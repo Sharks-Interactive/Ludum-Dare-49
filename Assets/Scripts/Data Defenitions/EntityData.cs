@@ -15,4 +15,6 @@ public class EntityData : ScriptableObject
     public string ShortDescription;
 
     public Sprite EntitySprite;
+
+    public Gradient[] TeamColors = new Gradient[2];
 }

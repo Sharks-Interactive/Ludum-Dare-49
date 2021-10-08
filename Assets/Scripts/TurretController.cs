@@ -81,7 +81,7 @@ namespace Chrio.World
 
             // Continous damage
             UpdateLaserPos(Target.GetGameObject().transform.position);
-            if (GlobalState.Game.MainCamera.OrthographicBounds().Contains(imageRenderer.rectTransform.position))
+            if (imageRenderer.rectTransform.IsFullyVisibleFrom(GlobalState.Game.MainCamera))
                 GlobalState.Game.Shake.Shake(0.16f, 0.1f);
             Laser.startColor = LaserColor[0];
             Laser.endColor = LaserColor[1];
@@ -109,7 +109,7 @@ namespace Chrio.World
             Laser.startColor = LaserColor[0];
             Laser.endColor = LaserColor[1];
 
-            if (GlobalState.Game.MainCamera.OrthographicBounds().Contains(imageRenderer.rectTransform.position))
+            if (imageRenderer.rectTransform.IsFullyVisibleFrom(GlobalState.Game.MainCamera))
                 GlobalState.Game.Shake.Shake();
 
             // Fade it out as part of the "pulse"

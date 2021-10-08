@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 72529382}
   - component: {fileID: 72529384}
   - component: {fileID: 72529383}
+  - component: {fileID: 72529386}
   - component: {fileID: 72529385}
   m_Layer: 0
   m_Name: Star Layer Two
@@ -406,6 +407,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParrallaxFactor: 0.7
   Offset: {x: 0, y: 0, z: 0}
+--- !u!114 &72529386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72529381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 72529385}
 --- !u!1 &82196618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1624,6 +1638,7 @@ GameObject:
   - component: {fileID: 441998231}
   - component: {fileID: 441998234}
   - component: {fileID: 441998233}
+  - component: {fileID: 441998235}
   - component: {fileID: 441998232}
   m_Layer: 0
   m_Name: Planet
@@ -1703,6 +1718,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441998230}
   m_CullTransparentMesh: 1
+--- !u!114 &441998235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441998230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 441998232}
 --- !u!1 &449545946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,6 +1894,7 @@ GameObject:
   - component: {fileID: 473102092}
   - component: {fileID: 473102095}
   - component: {fileID: 473102094}
+  - component: {fileID: 473102096}
   - component: {fileID: 473102093}
   m_Layer: 0
   m_Name: Star Layer Three
@@ -1945,6 +1974,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473102091}
   m_CullTransparentMesh: 1
+--- !u!114 &473102096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473102091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 473102093}
 --- !u!1 &497668921
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,6 +1998,7 @@ GameObject:
   - component: {fileID: 497668922}
   - component: {fileID: 497668925}
   - component: {fileID: 497668924}
+  - component: {fileID: 497668926}
   - component: {fileID: 497668923}
   m_Layer: 0
   m_Name: Planet 2
@@ -2035,6 +2078,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497668921}
   m_CullTransparentMesh: 1
+--- !u!114 &497668926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497668921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 497668923}
 --- !u!1 &503226751
 GameObject:
   m_ObjectHideFlags: 0
@@ -2388,6 +2444,7 @@ GameObject:
   m_Component:
   - component: {fileID: 615414646}
   - component: {fileID: 615414647}
+  - component: {fileID: 615414648}
   m_Layer: 0
   m_Name: Shake
   m_TagString: Untagged
@@ -2426,6 +2483,19 @@ MonoBehaviour:
   shakeDuration: 0
   shakeAmount: 0.7
   decreaseFactor: 1
+--- !u!114 &615414648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 615414645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 615414647}
 --- !u!1001 &617058765
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3213,6 +3283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 729477780}
+  - component: {fileID: 729477781}
   - component: {fileID: 729477779}
   m_Layer: 7
   m_Name: Post-Process
@@ -3252,6 +3323,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &729477781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729477778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 729477779}
 --- !u!1 &740701157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3415,6 +3499,7 @@ GameObject:
   - component: {fileID: 763978801}
   - component: {fileID: 763978804}
   - component: {fileID: 763978803}
+  - component: {fileID: 763978805}
   - component: {fileID: 763978802}
   m_Layer: 0
   m_Name: Planet 3
@@ -3494,6 +3579,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763978800}
   m_CullTransparentMesh: 1
+--- !u!114 &763978805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763978800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 763978802}
 --- !u!1 &788640891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3505,6 +3603,7 @@ GameObject:
   - component: {fileID: 788640892}
   - component: {fileID: 788640895}
   - component: {fileID: 788640894}
+  - component: {fileID: 788640896}
   - component: {fileID: 788640893}
   m_Layer: 0
   m_Name: Star Layer Four
@@ -3584,6 +3683,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 788640891}
   m_CullTransparentMesh: 1
+--- !u!114 &788640896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 788640891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 788640893}
 --- !u!1 &800161454
 GameObject:
   m_ObjectHideFlags: 0
@@ -4294,6 +4406,7 @@ GameObject:
   - component: {fileID: 1094452424}
   - component: {fileID: 1094452427}
   - component: {fileID: 1094452426}
+  - component: {fileID: 1094452428}
   - component: {fileID: 1094452425}
   m_Layer: 0
   m_Name: Sun
@@ -4373,6 +4486,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094452423}
   m_CullTransparentMesh: 1
+--- !u!114 &1094452428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094452423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 1094452425}
 --- !u!1 &1142337175
 GameObject:
   m_ObjectHideFlags: 0
@@ -4665,6 +4791,7 @@ GameObject:
   - component: {fileID: 1184623728}
   - component: {fileID: 1184623730}
   - component: {fileID: 1184623729}
+  - component: {fileID: 1184623732}
   - component: {fileID: 1184623731}
   m_Layer: 0
   m_Name: Star Layer One
@@ -4744,6 +4871,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParrallaxFactor: 0.9
   Offset: {x: 0, y: 0, z: 0}
+--- !u!114 &1184623732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1184623727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 1184623731}
 --- !u!1 &1189468761
 GameObject:
   m_ObjectHideFlags: 0
@@ -6483,7 +6623,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.017024098, g: 0.015619444, b: 0.084905684, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

@@ -98,6 +98,7 @@ namespace Chrio.World
             public Mouse Cursor = new Mouse();
             public Game Game;
             public int LocalPlayerNum;
+            public bool LowQuality = false;
 
             public State()
             {

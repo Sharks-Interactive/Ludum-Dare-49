@@ -24,6 +24,7 @@ namespace Chrio.Entities
             {
                 OwnerID = HitInfo.Attacker.GetOwnerID(); // Swap owners
                 health = EntityData.Health * 5; // Reset health
+                if (OwnerID < 2) imageRenderer.color = (OwnerID != 0 ? EntityData.TeamColors[OwnerID].colorKeys[0].color : Color.white);
             }
         }
 

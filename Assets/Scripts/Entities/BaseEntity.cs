@@ -29,6 +29,7 @@ namespace Chrio.Entities
             rectTransform = GetComponent<RectTransform>();
             health = EntityData.Health;
             imageRenderer.sprite = EntityData.EntitySprite;
+            if (OwnerID < 2) imageRenderer.color = (OwnerID != 0 ? EntityData.TeamColors[OwnerID].colorKeys[0].color : imageRenderer.color);
 
             base.OnLoad(_gameState, _callback);
         }

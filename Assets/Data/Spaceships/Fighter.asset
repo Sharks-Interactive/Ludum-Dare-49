@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c514f57774348384b8c3abc85e0a0df7, type: 3}
+  m_Name: Fighter
+  m_EditorClassIdentifier: 
+  Health: 1000
+  DisplayName: Fighter
+  ShortDescription: A quick, nimble craft with decent damage output and low health.
+  EntitySprite: {fileID: -465877756999394448, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}
+  MaxSpeed: 20
+  Acceleration: 5
+  Weapon: {fileID: 11400000, guid: 5aafc663e67bada4685d4f0a2ddc5025, type: 2}
+  ConstructionTime: 1
+  ConstructionCost: 150
+  Range: 5.59
+  TurretSprite: {fileID: -4925448337817528618, guid: 8601318dadd3aa545a6a581741e997d2, type: 3}

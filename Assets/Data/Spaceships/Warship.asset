@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c514f57774348384b8c3abc85e0a0df7, type: 3}
+  m_Name: Warship
+  m_EditorClassIdentifier: 
+  Health: 2250
+  DisplayName: Warship
+  ShortDescription: Decent speed, deadly weaponry but light armour.
+  EntitySprite: {fileID: 6113260494978225853, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}
+  MaxSpeed: 15
+  Acceleration: 3
+  Weapon: {fileID: 11400000, guid: d81d927e23544394988c876b41f68d88, type: 2}
+  ConstructionTime: 20
+  ConstructionCost: 1200
+  Range: 5
+  TurretSprite: {fileID: 3052182395561689994, guid: 8f66ae2e22650a649b68bd9e215af691, type: 3}

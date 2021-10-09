@@ -159,7 +159,7 @@ namespace Chrio.Interaction
         {
             foreach (IBaseEntity ent in GlobalState.Game.Entities.Selected) // If we do loop through each one deselect it and issue a move command
             {
-                ent.OnDeselected();
+               // ent.OnDeselected();
                 ent.OnCommand(new Command( // Issue move order
                 CommandType.Move,
                 RandomPointInsideCircle(GlobalState.Game.MainCamera.ScreenToWorldPoint(Input.mousePosition), 3).ToString("F6"), // Randomize for multi select
@@ -167,10 +167,10 @@ namespace Chrio.Interaction
                 ));
             }
 
-            GlobalState.Game.Entities.Selected.Clear();
-            prevSelected = null;
-            if (ClearAfter)
-                curSelected = null;
+            //GlobalState.Game.Entities.Selected.Clear();
+            //prevSelected = null;
+            //if (ClearAfter)
+            //    curSelected = null;
         }
     }
 }

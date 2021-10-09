@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using SharkUtils;
+using UnityEngine.Assertions;
 
 namespace Chrio.World.Loading
 {
@@ -105,6 +106,8 @@ namespace Chrio.World.Loading
 
             _totalScripts = _interfaceList.Count;
             GameState = new Game_State.State();
+
+            Assert.AreNotEqual(GameState, null);
 
             foreach (ILoadableObject t_lO in _interfaceList)
                 t_lO.OnLoad(GameState, ScriptLoadComplete);

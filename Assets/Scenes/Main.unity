@@ -420,6 +420,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 72529385}
+  Objects:
+  - {fileID: 72529381}
 --- !u!1 &82196618
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,6 +977,7 @@ GameObject:
   - component: {fileID: 340773322}
   - component: {fileID: 340773326}
   - component: {fileID: 340773324}
+  - component: {fileID: 340773325}
   m_Layer: 5
   m_Name: Minimap
   m_TagString: Untagged
@@ -1050,6 +1053,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!114 &340773325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340773320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 340773322}
+  Objects:
+  - {fileID: 340773320}
 --- !u!114 &340773326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,6 +1749,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 441998232}
+  Objects:
+  - {fileID: 441998230}
 --- !u!1 &449545946
 GameObject:
   m_ObjectHideFlags: 0
@@ -1987,6 +2007,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 473102093}
+  Objects:
+  - {fileID: 473102091}
 --- !u!1 &497668921
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,6 +2113,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 497668923}
+  Objects:
+  - {fileID: 497668921}
 --- !u!1 &503226751
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,6 +2520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 615414647}
+  Objects: []
 --- !u!1001 &617058765
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3336,6 +3361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 729477779}
+  Objects: []
 --- !u!1 &740701157
 GameObject:
   m_ObjectHideFlags: 0
@@ -3592,6 +3618,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 763978802}
+  Objects:
+  - {fileID: 763978800}
 --- !u!1 &788640891
 GameObject:
   m_ObjectHideFlags: 0
@@ -3696,6 +3724,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 788640893}
+  Objects:
+  - {fileID: 788640891}
 --- !u!1 &800161454
 GameObject:
   m_ObjectHideFlags: 0
@@ -4256,6 +4286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1007748060}
   - component: {fileID: 1007748059}
+  - component: {fileID: 1007748056}
   m_Layer: 0
   m_Name: Minimap Cam
   m_TagString: Untagged
@@ -4263,6 +4294,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1007748056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007748055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9928cbf7551372f4faf0e9a2c0c7856c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectToDisable: {fileID: 0}
+  Objects:
+  - {fileID: 1007748055}
 --- !u!20 &1007748059
 Camera:
   m_ObjectHideFlags: 0
@@ -4499,6 +4545,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 1094452425}
+  Objects:
+  - {fileID: 1094452423}
 --- !u!1 &1142337175
 GameObject:
   m_ObjectHideFlags: 0
@@ -4884,6 +4932,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToDisable: {fileID: 1184623731}
+  Objects:
+  - {fileID: 1184623727}
 --- !u!1 &1189468761
 GameObject:
   m_ObjectHideFlags: 0
@@ -6623,7 +6673,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.017024098, g: 0.015619444, b: 0.084905684, a: 1}
+  m_BackGroundColor: {r: 0.015686275, g: 0.015686275, b: 0.066037714, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

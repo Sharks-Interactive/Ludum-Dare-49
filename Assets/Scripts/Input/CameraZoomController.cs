@@ -35,12 +35,12 @@ namespace Chrio.Controls
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
                 _camera.transform.position = _camera.transform.position.UpdateAxisEuler(_camera.transform.position.y + Input.GetAxis("Vertical") * Time.deltaTime * 10, Axis.Y);
 
-            if ((Input.mouseScrollDelta.y > 0 || Input.GetKeyDown(KeyCode.E)) && _camera.orthographicSize < SizeConstraints.y)
+            if ((Input.mouseScrollDelta.y > 0 || Input.GetKeyDown(KeyCode.Q)) && _camera.orthographicSize < SizeConstraints.y)
             {
                 MoveCamera(Dir.Up);
                 _camera.orthographicSize += Sensitivity;
             }
-            else if ((Input.mouseScrollDelta.y < 0 || Input.GetKeyDown(KeyCode.Q)) && _camera.orthographicSize > SizeConstraints.x)
+            else if ((Input.mouseScrollDelta.y < 0 || Input.GetKeyDown(KeyCode.E)) && _camera.orthographicSize > SizeConstraints.x)
             {
                 MoveCamera(Dir.Down);
                 _camera.orthographicSize -= Sensitivity;

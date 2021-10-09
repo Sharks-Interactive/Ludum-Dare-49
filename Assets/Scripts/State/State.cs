@@ -105,6 +105,7 @@ namespace Chrio.World
                 Cursor = new Mouse();
                 Game = new Game();
                 LocalPlayerNum = 0;
+                LowQuality = (PlayerPrefs.GetInt("LQ", 0) == 0 ? false : true);
             }
         }
     }

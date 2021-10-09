@@ -468,6 +468,22 @@ namespace SharkUtils
             return bounds;
         }
 
+        public static bool RemoveIfContains<T>(this List<T> _list, T element)
+        {
+            if (!_list.Contains(element)) return false;
+                
+            _list.Remove(element);
+            return true;
+        }
+
+        public static bool AddIfNotContains<T>(this List<T> _list, T element)
+        {
+            if (!_list.Contains(element)) return false;
+
+            _list.Add(element);
+            return true;
+        }
+
         /// <summary>
         /// Counts the bounding box corners of the given RectTransform that are visible from the given Camera in screen space.
         /// </summary>

@@ -22,6 +22,7 @@ namespace Chrio.World
         private Color2 _clearColor = new Color2(Color.clear, Color.clear);
         private DamageInfo _weaponDmg;
         public Image imageRenderer;
+        private AudioSource _audio;
 
         private Vector3 _offset;
 
@@ -31,6 +32,7 @@ namespace Chrio.World
             imageRenderer = GetComponent<Image>();
             AttachedEntity = transform.parent.GetComponent<IBaseEntity>();
             Spaceship ship = AttachedEntity as Spaceship;
+            _audio = GetComponent<AudioSource>();
             imageRenderer.sprite = ship.Data.TurretSprite;
 
             Laser = GetComponent<LineRenderer>();
@@ -66,8 +68,8 @@ namespace Chrio.World
         void FixedUpdate()
         {
             // Turn to facce target
-            if (Target == null) { Laser.enabled = false; return; }
-            if (!Target.GetGameObject().activeInHierarchy) { Target = null; return; }
+            if (Target == null) { Laser.enabled = false; GlobalState.Game.Entities.Visible.RemoveIfContains(AttachedEntity); return; }
+            if (!Target.GetGameObject().activeInHierarchy) { Target = null; GlobalState.Game.Entities.Visible.RemoveIfContains(AttachedEntity);  return; }
             _weaponDmg = new DamageInfo(
                     Info.Damage,
                     Info.DmgType,
@@ -82,9 +84,16 @@ namespace Chrio.World
             // Continous damage
             UpdateLaserPos(Target.GetGameObject().transform.position);
             if (imageRenderer.rectTransform.IsFullyVisibleFrom(GlobalState.Game.MainCamera))
-                GlobalState.Game.Shake.Shake(0.16f, 0.1f);
+            {
+                GlobalState.Game.Shake.Shake(0.1f, 0.05f - ((70 - GlobalState.Game.MainCamera.orthographicSize) / 700.0f));
+                _audio.pitch = RandomFromRange(new Vector2(0.5f, 1.5f));
+                if (Time.time % 30 == 0) _audio.PlayOneShot(Resources.Load<AudioClip>("Sound/LaserContinous"));
+                GlobalState.Game.Entities.Visible.AddIfNotContains(AttachedEntity);
+            }
+            else try { GlobalState.Game.Entities.Visible.RemoveIfContains(AttachedEntity); } catch { };
             Laser.startColor = LaserColor[0];
             Laser.endColor = LaserColor[1];
+            
             _weaponDmg.Amount = (_weaponDmg.Amount / 60);
             Target.OnDamaged(_weaponDmg);
         }
@@ -109,8 +118,15 @@ namespace Chrio.World
             Laser.startColor = LaserColor[0];
             Laser.endColor = LaserColor[1];
 
+
             if (imageRenderer.rectTransform.IsFullyVisibleFrom(GlobalState.Game.MainCamera))
-                GlobalState.Game.Shake.Shake();
+            {
+                _audio.pitch = RandomFromRange(new Vector2(1, 1.5f));
+                _audio.PlayOneShot(Resources.Load<AudioClip>("Sound/Laser"));
+                GlobalState.Game.Shake.Shake(0.1f, 0.1f - ((70 - GlobalState.Game.MainCamera.orthographicSize) / 700.0f));
+                GlobalState.Game.Entities.Visible.AddIfNotContains(AttachedEntity);
+            }
+            else try { GlobalState.Game.Entities.Visible.RemoveIfContains(AttachedEntity); } catch { };
 
             // Fade it out as part of the "pulse"
             Laser.DOColor(LaserColor.GetColor2(), _clearColor, Info.Cooldown / 2);

@@ -48,10 +48,12 @@ namespace Chrio.World
             private Dictionary<int, IBaseEntity> EntityIDs;
             public Dictionary<GameObject, IBaseEntity> WorldEntities;
             public List<IBaseEntity> Selected;
+            public List<IBaseEntity> Visible;
 
             public Entities()
             {
                 Selected = new List<IBaseEntity>();
+                Visible = new List<IBaseEntity>();
                 WorldEntities = new Dictionary<GameObject, IBaseEntity>();
                 EntityIDs = new Dictionary<int, IBaseEntity>();
 

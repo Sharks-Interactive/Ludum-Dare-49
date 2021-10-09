@@ -21,7 +21,7 @@ namespace Chrio.Controls
             Down = 1,
         }    
 
-        void Start() { _camera = GetComponent<Camera>(); _lastFrameMousePos = Input.mousePosition; Cursor.lockState = CursorLockMode.Confined; }
+        void Start() { _camera = GetComponent<Camera>(); _lastFrameMousePos = Input.mousePosition; }
 
         void Update()
         {

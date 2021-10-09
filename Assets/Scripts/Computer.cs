@@ -27,7 +27,7 @@ namespace Chrio.Entities
         public List<Spaceship> MyFrigates;
         public List<Spaceship> MyWarships;
 
-        public int StepSpeed = 2;
+        public float StepSpeed = 2.0f;
         public float TimeAtTime;
 
         public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
@@ -51,7 +51,7 @@ namespace Chrio.Entities
                     Asteroids.Add(ent);
             }
 
-            StepSpeed = PlayerPrefs.GetInt("Difficulty", 2);
+            StepSpeed = PlayerPrefs.GetFloat("Difficulty", 2.0f);
 
             base.OnLoad(_gameState, _callback);
         }

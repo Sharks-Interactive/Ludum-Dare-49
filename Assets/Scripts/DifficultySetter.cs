@@ -14,8 +14,8 @@ public class DifficultySetter : MonoBehaviour
     // Update is called once per frame
     public void SetDifficulty(string diff)
     {
-        int dif = Int32.Parse(diff);
-        PlayerPrefs.SetInt("Difficulty", dif);
+        float dif = float.Parse(diff);
+        PlayerPrefs.SetFloat("Difficulty", dif);
     }
 
     public void SetLowQuality(bool Low) => PlayerPrefs.SetInt("LQ", Low ? 1 : 0);

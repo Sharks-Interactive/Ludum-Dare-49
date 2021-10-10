@@ -12,15 +12,22 @@ public class MusicManager : SharksBehaviour
     public List<AudioClip> WarMusic = new List<AudioClip>();
     public List<AudioClip> PeaceMusic = new List<AudioClip>();
 
-    public List<int> WarPlays = new List<int>();
-    public List<int> PeacePlays = new List<int>();
+    private List<int> WarPlays = new List<int>();
+    private List<int> PeacePlays = new List<int>();
 
     private AudioSource AudioSource;
+    private Tension TensionLevel;
+
+    private enum Tension
+    {
+         Peace,
+         War
+     }
 
     public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
     {
-        WarMusic = Resources.LoadAll<AudioClip>("Music/War/").ToList();
-        PeaceMusic = Resources.LoadAll<AudioClip>("Music/Peace/").ToList();
+        WarMusic = Resources.LoadAllAsync<AudioClip>("Music/War/").ToList();
+        PeaceMusic = Resources.LoadAllAsync<AudioClip>("Music/Peace/").ToList();
 
         AudioSource = GetComponent<AudioSource>();
         StartCoroutine(ChooseMusic());
@@ -30,10 +37,38 @@ public class MusicManager : SharksBehaviour
     public IEnumerator ChooseMusic()
     {
         int index = Mathf.RoundToInt(Random.Range(0, WarMusic.Count() - 1));
+        int peaceIndex = Mathf.RoundToInt(Random.Range(0, PeaceMusic.Count() - 1);
 
         AudioSource.PlayOneShot(WarMusic[index]);
-        yield return new WaitForSeconds(WarMusic[index].length);
 
-        StartCoroutine(ChooseMusic());
+        while (true)
+        {
+            yield return null;
+            Tension _currentTensionLevel;
+
+            _currentTensionLevel = GlobalState.Game.Entities.Selected > 20;
+            
+           if (_currentTensionLevel != TensionLevel)
+           {
+               // Fade out old song fade in new song
+               AudioSource.volume.DOFade(1.0f, 0.0f, 15.0f);
+               yield return new WaitForSeconds(15.0f);
+               PlayNewSong();
+               AudioSource.volume.DOFade(0.0f, 1.0f, 15.0f);
+               yield return new WaitForSeconds(15.0f);
+
+               TensionLevel = _currentTensionLevel;
+               // Randomize index
+           }
+           // Handle if Time.time + songs<Tension>[index].length < Time.time aka song ended randomize index and play new song
+        }
+    }  
+
+    private void PlayNewSong()
+    {
+       if (TensionLevel == Tension.War)
+          AudioSource.PlayOneShot(WarMusic[index]);
+       else
+          AudioSource.PlayOneShot(PeaceMusic[peaceIndex]);
     }
 }

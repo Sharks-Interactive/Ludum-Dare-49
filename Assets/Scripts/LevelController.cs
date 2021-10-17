@@ -12,6 +12,9 @@ namespace Chrio.World
         {
             GameObject WorldPlace = GameObject.FindGameObjectWithTag("World");
 
+            Data.SaveToFile();
+            Data.LoadDataFromFile();
+
             Transform EnemyStartingPoint = GameObject.Find(Data.Enemy.StartingPlace).transform;
             Transform PlayerStartingPoint = GameObject.Find(Data.Player.StartingPlace).transform;
             Vector3 EnemyStartingPlace = EnemyStartingPoint.position;

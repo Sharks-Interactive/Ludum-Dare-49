@@ -103,7 +103,7 @@ namespace Chrio.UI
                     else if (dock != null)
                     {
                         if (dock.GetOwnerID() == 0) Construction.SetArrayActive(true);
-                        HealthBar.maxValue = GlobalState.Game.Entities.Selected[0].GetData().Health;
+                        HealthBar.maxValue = GlobalState.Game.Entities.Selected[0].GetData().Health * (dock.GetOwnerID() == 2 ? 1 : 5);
                         HealthBar.value = GlobalState.Game.Entities.Selected[0].Health;
                         TextBoxes[2].text = $"Health: {GlobalState.Game.Entities.Selected[0].Health}/{GlobalState.Game.Entities.Selected[0].GetData().Health * (dock.GetOwnerID() == 2 ? 1 : 5)}\nBuilding: {(dock.Constructing != null ? dock.Constructing.DisplayName : "Nothing")}\nV Construction V";
                     }

@@ -19,15 +19,13 @@ public class MinimapManager : UIBehaviour
     {
         if (Input.GetKey(KeyCode.M))
         {
-            _renderer.color = _renderer.color.UpdateColor(1.0f, Axis.W);
-            _renderer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 264);
-            _renderer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 200);
+            _renderer.transform.localScale = _renderer.transform.localScale.UpdateAxisEuler(0.63f, Axis.X);
+            _renderer.transform.localScale = _renderer.transform.localScale.UpdateAxisEuler(0.63f, Axis.Y);
         }
         else
         {
-            _renderer.color = _renderer.color.UpdateColor(0.7f, Axis.W);
-            _renderer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 178.7f);
-            _renderer.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 113.8f);
+            _renderer.transform.localScale = _renderer.transform.localScale.UpdateAxisEuler(0.2f, Axis.X);
+            _renderer.transform.localScale = _renderer.transform.localScale.UpdateAxisEuler(0.2f, Axis.Y);
         }
     }
 }

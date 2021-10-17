@@ -501,7 +501,7 @@ namespace SharkUtils
             for (var i = 0; i < objectCorners.Length; i++) // For each corner in rectTransform
             {
                 tempScreenSpaceCorner = camera.WorldToScreenPoint(objectCorners[i]); // Transform world space position of corner to screen space
-                if (screenBounds.Contains(tempScreenSpaceCorner)) // If the corner is inside the screen
+                if (screenBounds.Contains(tempScreenSpaceCorner) || rectTransform.rect.Contains(screenBounds.center)) // If the corner is inside the screen
                 {
                     visibleCorners++;
                 }

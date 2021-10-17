@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using Chrio.Entities;
+using DG.Tweening;
 
 public class MusicManager : SharksBehaviour
 {
@@ -18,57 +19,80 @@ public class MusicManager : SharksBehaviour
     private AudioSource AudioSource;
     private Tension TensionLevel;
 
+    private int index;
+    private int peaceIndex;
+
+    private float timeAtStart;
+
     private enum Tension
     {
-         Peace,
-         War
-     }
+        Peace,
+        War
+    }
 
     public override void OnLoad(Game_State.State _gameState, ILoadableObject.CallBack _callback)
     {
-        WarMusic = Resources.LoadAllAsync<AudioClip>("Music/War/").ToList();
-        PeaceMusic = Resources.LoadAllAsync<AudioClip>("Music/Peace/").ToList();
+        base.OnLoad(_gameState, _callback);
+        WarMusic = Resources.LoadAll<AudioClip>("Music/War/").ToList();
+        PeaceMusic = Resources.LoadAll<AudioClip>("Music/Peace/").ToList();
 
         AudioSource = GetComponent<AudioSource>();
         StartCoroutine(ChooseMusic());
-        base.OnLoad(_gameState, _callback);
     }
 
     public IEnumerator ChooseMusic()
     {
-        int index = Mathf.RoundToInt(Random.Range(0, WarMusic.Count() - 1));
-        int peaceIndex = Mathf.RoundToInt(Random.Range(0, PeaceMusic.Count() - 1);
+        timeAtStart = Time.time;
+        index = Mathf.RoundToInt(Random.Range(0, WarMusic.Count() - 1));
+        peaceIndex = Mathf.RoundToInt(Random.Range(0, PeaceMusic.Count() - 1));
 
-        AudioSource.PlayOneShot(WarMusic[index]);
+        PlayNewSong();
 
         while (true)
         {
             yield return null;
             Tension _currentTensionLevel;
 
-            _currentTensionLevel = GlobalState.Game.Entities.Selected > 20;
-            
-           if (_currentTensionLevel != TensionLevel)
-           {
-               // Fade out old song fade in new song
-               AudioSource.volume.DOFade(1.0f, 0.0f, 15.0f);
-               yield return new WaitForSeconds(15.0f);
-               PlayNewSong();
-               AudioSource.volume.DOFade(0.0f, 1.0f, 15.0f);
-               yield return new WaitForSeconds(15.0f);
+            int _playerShips = 0;
+            foreach (IBaseEntity ent in GlobalState.Game.Entities.WorldEntities.Values)
+                if (ent.GetOwnerID() == 0) _playerShips++;
+            _currentTensionLevel = (_playerShips > 10 ? Tension.War : Tension.Peace);
 
-               TensionLevel = _currentTensionLevel;
-               // Randomize index
-           }
-           // Handle if Time.time + songs<Tension>[index].length < Time.time aka song ended randomize index and play new song
+            if (_currentTensionLevel != TensionLevel)
+            {
+                // Fade out old song fade in new song
+                AudioSource.DOFade(0.0f, 15.0f);
+                yield return new WaitForSeconds(15.0f);
+                TensionLevel = _currentTensionLevel;
+                PlayNewSong();
+                AudioSource.DOFade(0.125f, 15.0f);
+                yield return new WaitForSeconds(15.0f);
+
+                index = Mathf.RoundToInt(Random.Range(0, WarMusic.Count() - 1));
+                peaceIndex = Mathf.RoundToInt(Random.Range(0, PeaceMusic.Count() - 1));
+            }
+            if (timeAtStart + (_currentTensionLevel == Tension.War ? WarMusic[index].length : PeaceMusic[peaceIndex].length) < Time.time)
+            {
+                index = Mathf.RoundToInt(Random.Range(0, WarMusic.Count() - 1));
+                peaceIndex = Mathf.RoundToInt(Random.Range(0, PeaceMusic.Count() - 1));
+                PlayNewSong();
+            }
         }
-    }  
+    }
 
     private void PlayNewSong()
     {
-       if (TensionLevel == Tension.War)
-          AudioSource.PlayOneShot(WarMusic[index]);
-       else
-          AudioSource.PlayOneShot(PeaceMusic[peaceIndex]);
+        timeAtStart = Time.time;
+        AudioSource.Stop();
+        if (TensionLevel == Tension.War)
+        {
+            AudioSource.PlayOneShot(WarMusic[index]);
+            AudioSource.clip = WarMusic[index];
+        }
+        else
+        {
+            AudioSource.PlayOneShot(PeaceMusic[peaceIndex]);
+            AudioSource.clip = PeaceMusic[peaceIndex];
+        }
     }
 }

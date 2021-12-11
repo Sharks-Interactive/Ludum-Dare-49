@@ -59,6 +59,7 @@ public class MusicManager : SharksBehaviour
                 if (ent.GetEntity() as Spaceship != null)
                 {
                     Spaceship _ship = ent.GetEntity() as Spaceship;
+                    if (_ship.Turret.Target == null) continue; // Not attacking anything
                     if (_ship.Turret.Target.GetOwnerID() != ent.GetOwnerID()
                         && _ship.Turret.Target.GetOwnerID() != 2) _fightingShips++;
                 }

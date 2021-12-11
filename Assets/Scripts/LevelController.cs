@@ -42,7 +42,7 @@ namespace Chrio.World
 
                 World = RandomPointInsideCircle(WorldPlace.transform.position, Data.AsteroidRange).UpdateAxisEuler(0, Axis.Z);
                 GameObject NewObject = (GameObject)Instantiate(Resources.Load("Asteroid"), World, WorldPlace.transform.rotation, WorldPlace.transform);
-                NewObject.GetComponent<Asteroid>().AsteroidWorth = (int)RandomFromRange(Data.AsteroidsWorth * (Asteroid.Health / 5000));
+                NewObject.GetComponent<Asteroid>().AsteroidWorth = (int)RandomFromRange(Data.AsteroidsWorth * ((Asteroid.Health / 5000) + 1.0f));
                 Game_State.Entities.InitEntity<Asteroid>(NewObject, _gameState, Asteroid, 2);
             }
 

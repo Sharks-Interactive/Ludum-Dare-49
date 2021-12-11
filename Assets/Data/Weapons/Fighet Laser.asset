@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c18b87433844e241963838d1ba74935, type: 3}
-  m_Name: Weak Pulse Laser 1
+  m_Name: Fighet Laser
   m_EditorClassIdentifier: 
-  Damage: 100
+  Damage: 225
   Type: 2
   Colors:
-  - {r: 0.56078434, g: 0.99103075, b: 1, a: 1}
-  - {r: 1, g: 0.6390434, b: 0, a: 1}
-  Cooldown: 0.5
+  - {r: 0.56078434, g: 1, b: 0.67058825, a: 1}
+  - {r: 1, g: 0.16710056, b: 0, a: 1}
+  Cooldown: 1.5
   DmgType: 0

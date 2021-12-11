@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c18b87433844e241963838d1ba74935, type: 3}
-  m_Name: Strong Continous Laser
+  m_Name: Frigate Laser
   m_EditorClassIdentifier: 
-  Damage: 600
+  Damage: 30000
   Type: 0
   Colors:
-  - {r: 0.88982075, g: 1, b: 0.56078434, a: 1}
-  - {r: 1, g: 0, b: 0.3598299, a: 1}
+  - {r: 0.56078434, g: 0.99103075, b: 1, a: 1}
+  - {r: 1, g: 0.6390434, b: 0, a: 1}
   Cooldown: 0
   DmgType: 0

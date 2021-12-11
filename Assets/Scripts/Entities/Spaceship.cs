@@ -92,6 +92,7 @@ public class Spaceship : BaseEntity
         if (!GlobalState.Game.Entities.WorldEntities.TryGetValue(collision.gameObject, out _tochingEntity)) return; // GlobalState is not aware of this entity
         if (_tochingEntity.GetOwnerID() == OwnerID) return; // The entity is not an enemy
         if (_attackTarget != null) return; // We are already attacking soemthing
+        if (Vector2.Distance(collision.transform.position, transform.position) > Data.Range) return; // This enemy is out of range
 
         _attackTarget = _tochingEntity;
     }

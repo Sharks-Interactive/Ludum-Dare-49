@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c18b87433844e241963838d1ba74935, type: 3}
-  m_Name: Pulse Laser
+  m_Name: Waship Railgun
   m_EditorClassIdentifier: 
-  Damage: 150
+  Damage: 150000
   Type: 2
   Colors:
-  - {r: 0.56078434, g: 1, b: 0.67058825, a: 1}
-  - {r: 1, g: 0.16710056, b: 0, a: 1}
-  Cooldown: 3
+  - {r: 0.88982075, g: 1, b: 0.56078434, a: 1}
+  - {r: 1, g: 0, b: 0.3598299, a: 1}
+  Cooldown: 5
   DmgType: 0

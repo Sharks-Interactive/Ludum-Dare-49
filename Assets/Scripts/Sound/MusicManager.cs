@@ -53,10 +53,16 @@ public class MusicManager : SharksBehaviour
             yield return null;
             Tension _currentTensionLevel;
 
-            int _playerShips = 0;
+            // Get the total number of ships fighting ships from other factions
+            int _fightingShips = 0;
             foreach (IBaseEntity ent in GlobalState.Game.Entities.WorldEntities.Values)
-                if (ent.GetOwnerID() == 0) _playerShips++;
-            _currentTensionLevel = (_playerShips > 10 ? Tension.War : Tension.Peace);
+                if (ent.GetEntity() as Spaceship != null)
+                {
+                    Spaceship _ship = ent.GetEntity() as Spaceship;
+                    if (_ship.Turret.Target.GetOwnerID() != ent.GetOwnerID()
+                        && _ship.Turret.Target.GetOwnerID() != 2) _fightingShips++;
+                }
+            _currentTensionLevel = (_fightingShips > 6 ? Tension.War : Tension.Peace);
 
             if (_currentTensionLevel != TensionLevel)
             {
